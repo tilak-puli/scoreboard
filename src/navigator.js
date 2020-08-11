@@ -1,8 +1,9 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from './components/home';
-import TeamNames from './components/team-names';
+import Home from './screens/home/home';
+import TeamNames from './screens/team-names/team-names-container';
+import Dashboard from './screens/dashboard/dashboard-container';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
@@ -16,6 +17,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="TeamSelector"
         component={TeamNames}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
