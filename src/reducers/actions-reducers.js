@@ -29,3 +29,9 @@ export const swapBatsman = (battingTeam) => {
   battingTeam.strikerIndex = battingTeam.nonStrikerIndex;
   battingTeam.nonStrikerIndex = oldStrikerIndex;
 };
+
+export const swapTeams = (state) => {
+  const oldBattingTeam = state.battingTeam;
+  state.battingTeam = state.bowlingTeam;
+  state.bowlingTeam = oldBattingTeam;
+};

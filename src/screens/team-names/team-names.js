@@ -7,7 +7,7 @@ import CommonStyles from '../../stylesheet';
 const TeamNames = ({updateMatchBasicDetails, navigation}) => {
   const [team1Name, updateTeam1Name] = useState('');
   const [team2Name, updateTeam2Name] = useState('');
-  const [overs, updateTotalOvers] = useState(10);
+  const [overs, updateTotalOvers] = useState(2);
   const [winTossTeam, updateWinTossTeam] = useState(1);
   const [selected, updatedSelected] = useState('batting');
 

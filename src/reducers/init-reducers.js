@@ -23,7 +23,7 @@ export const teamInitialState = (name) => ({
   strikerIndex: null,
   nonStrikerIndex: null,
   bowlerIndex: null,
-  inning: 1,
+  needBowlerChange: false,
 });
 
 export const updateMatchBasicDetails = (state, {payload}) => {
@@ -51,6 +51,8 @@ export const updateInitPlayers = (state, {payload}) => {
   bowlingTeam.bowlerIndex = getPlayerOrNewPlayerIndex(bowlingTeam, bowler);
 
   state.initPlayersDialogVisible = false;
+  state.inningsOverDialogVisible = false;
+  state.needInningsChange = false;
 };
 
 //getters

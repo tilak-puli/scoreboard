@@ -4,7 +4,7 @@ import {matchSlice} from '../../../../reducer';
 
 const mapStateToProps = ({match}) => ({
   isVisible: match.nextBowlerDialogVisible,
-  playerName: 'Bowler',
+  playerType: 'Bowler',
 });
 
 const mapDispatchToProps = (dispatch) => ({

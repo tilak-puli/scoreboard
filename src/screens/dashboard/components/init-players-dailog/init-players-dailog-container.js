@@ -3,7 +3,7 @@ import {matchSlice} from '../../../../reducer';
 import InitPlayersDialog from './init-players-dialog';
 
 const mapStateToProps = ({match}) => ({
-  isVisible: match.initPlayersDialogVisible,
+  isVisible: match.initPlayersDialogVisible || match.inningsOverDialogVisible,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -24,6 +24,7 @@ export const getInitialState = () => ({
   team1: teamInitialState('team1'),
   team2: teamInitialState('team2'),
   overs: 0,
+  innings: 1,
   battingTeam: 'team1',
   bowlingTeam: 'team2',
   runsInputDialogVisible: false,
@@ -36,20 +37,23 @@ export const matchSlice = createSlice({
   name: 'match',
   initialState: getInitialState(),
   reducers: {
+    createNewMatch,
     updateMatchBasicDetails,
     updateInitPlayers,
     addBall,
+
     undo,
     swap,
     retire,
+
+    nextBatsman,
+    nextBowler,
+
     updateRunsInputDialogVisible,
     updateNextBatsmanDialogVisible,
     updateNextBowlerDialogVisible,
     updateInitPlayersDialogVisible,
     updateInningsOverDialogVisible,
-    nextBatsman,
-    nextBowler,
-    createNewMatch,
   },
 });
 

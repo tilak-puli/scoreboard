@@ -1,25 +1,34 @@
 import {getCurrentBowler, getStriker, getTeams} from './init-reducers';
 import {getOver, getOverVal} from '../cricket-utils';
-import {swapBatsman} from './actions-reducers';
+import {swapBatsman, swapTeams} from './actions-reducers';
 
 export const addBall = (state, {payload}) => {
   const {battingTeam, bowlingTeam} = getTeams(state);
   const {bowling} = getCurrentBowler(bowlingTeam);
   const {batting} = getStriker(battingTeam);
 
-  const allOversOver = state.overs == getOver(bowling.balls);
-  const oneOverCompleted = (batting.balls + 1) % 6 === 0;
-
-  if (oneOverCompleted) {
-    state.nextBowlerDialogVisible = true;
+  if (state.needBowlerChange) state.nextBowlerDialogVisible = true;
+  if (state.needInningsChange) state.inningsOverDialogVisible = true;
+  else {
+    updateBall(battingTeam, payload, batting, bowling);
   }
+
+  const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
+  const oneOverCompleted = batting.balls % 6 === 0;
 
   if (allOversOver) {
-    state.inning++;
     state.inningsOverDialogVisible = true;
-    return;
+    state.needInningsChange = true;
+    state.innings++;
+    swapTeams(state);
+  } else if (oneOverCompleted) {
+    swapBatsman(battingTeam);
+    state.nextBowlerDialogVisible = true;
+    state.needBowlerChange = true;
   }
+};
 
+function updateBall(battingTeam, payload, batting, bowling) {
   //update batting team
   battingTeam.runs += payload.runs;
   battingTeam.balls++;
@@ -33,14 +42,4 @@ export const addBall = (state, {payload}) => {
   bowling.runs += payload.runs;
   bowling.balls += 1;
   bowling.economyRate = (bowling.runs / getOverVal(bowling.balls)).toFixed(2);
-
-  if (oneOverCompleted) {
-    swapBatsman(battingTeam);
-    state.nextBowlerDialogVisible = true;
-  }
-
-  if (allOversOver) {
-    state.inning++;
-    state.inningsOverDialogVisible = true;
-  }
-};
+}

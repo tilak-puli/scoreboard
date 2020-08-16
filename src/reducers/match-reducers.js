@@ -20,6 +20,7 @@ export const nextBowler = (state, {payload}) => {
     payload.name,
   );
   state.nextBowlerDialogVisible = false;
+  state.needBowlerChange = false;
 };
 
 export const isAllOut = (team) => team.retiredCounts + team.wickets === 10;

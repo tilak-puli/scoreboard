@@ -17,9 +17,7 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
 
   return (
     <Dialog
-      dialogTitle={
-        <DialogTitle title="One Last form....before exciting match" />
-      }
+      dialogTitle={<DialogTitle title="Let's start" />}
       width={'90%'}
       visible={isVisible}
       dialogAnimation={
