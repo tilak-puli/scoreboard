@@ -1,20 +1,45 @@
-import {getCurrentBowler, getStriker, getTeams} from './init-reducers';
+import {
+  getCurrentBowler,
+  getInitialTypes,
+  getStriker,
+  getTeams,
+} from './init-reducers';
 import {getOver, getOverVal} from '../cricket-utils';
 import {swapBatsman, swapTeams} from './actions-reducers';
 
-export const addBall = (state, {payload}) => {
-  const {battingTeam, bowlingTeam} = getTeams(state);
-  const {bowling} = getCurrentBowler(bowlingTeam);
-  const {batting} = getStriker(battingTeam);
+function categorizeRuns(types, originalRuns) {
+  let extras = 0;
+  let runs = 0;
+  if (types.wide || types.noBall) {
+    extras++;
+  }
+  if (types.byes || types.legByes) {
+    extras += originalRuns;
+  } else {
+    runs += originalRuns;
+  }
 
-  if (state.needBowlerChange) state.nextBowlerDialogVisible = true;
-  if (state.needInningsChange) state.inningsOverDialogVisible = true;
-  else {
-    updateBall(battingTeam, payload, batting, bowling);
+  return {extras, runs};
+}
+
+export const addBall = (state, {payload}) => {
+  const {battingTeam} = getTeams(state);
+
+  if (state.needBowlerChange) {
+    state.nextBowlerDialogVisible = true;
+    return;
+  }
+  if (state.needInningsChange) {
+    state.inningsOverDialogVisible = true;
+    return;
+  } else {
+    updateBall(state, payload.runs);
+    state.selectedTypes = getInitialTypes();
   }
 
   const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
-  const oneOverCompleted = batting.balls % 6 === 0;
+  const oneOverCompleted =
+    battingTeam.balls % 6 === 0 && isBallCounted(state.selectedTypes);
 
   if (allOversOver) {
     state.inningsOverDialogVisible = true;
@@ -28,18 +53,42 @@ export const addBall = (state, {payload}) => {
   }
 };
 
-function updateBall(battingTeam, payload, batting, bowling) {
-  //update batting team
-  battingTeam.runs += payload.runs;
-  battingTeam.balls++;
+export const updateSelectedType = (state, {payload}) => {
+  state.selectedTypes = {...state.selectedTypes, [payload.type]: payload.value};
+};
 
-  //update striker
-  batting.runs += payload.runs;
+function updateBall(state, originalRuns) {
+  const {battingTeam, bowlingTeam} = getTeams(state);
+  const {bowling} = getCurrentBowler(bowlingTeam);
+  const {batting} = getStriker(battingTeam);
+  const types = state.selectedTypes;
+
+  const {extras, runs} = categorizeRuns(types, originalRuns);
+
+  updateBattingTeam(battingTeam, runs + extras, isBallCounted(types));
+  updateStriker(batting, runs, types);
+  updateBowler(bowling, runs + extras);
+}
+
+function updateBattingTeam(battingTeam, runs, isBallCounted) {
+  battingTeam.runs += runs;
+  if (isBallCounted) battingTeam.balls++;
+}
+
+function updateStriker(batting, runs) {
+  batting.runs += runs;
   batting.balls += 1;
   batting.strikeRate = parseInt((batting.runs / batting.balls) * 100);
+}
 
-  //update bowler
-  bowling.runs += payload.runs;
+function updateBowler(bowling, runs) {
+  bowling.runs += runs;
   bowling.balls += 1;
   bowling.economyRate = (bowling.runs / getOverVal(bowling.balls)).toFixed(2);
+}
+
+function isBallCounted({wide, noBall}) {
+  if (wide || noBall) return false;
+
+  return true;
 }

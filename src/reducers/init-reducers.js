@@ -30,11 +30,16 @@ export const updateMatchBasicDetails = (state, {payload}) => {
   state.team1.name = payload.team1Name;
   state.team2.name = payload.team2Name;
   state.overs = payload.overs;
+
   state.tossWonByTeam = payload.tossWonByTeam;
   state.selected = payload.selected;
-  state.battingTeam = payload.selected === 'batting' ? 'team1' : 'team2';
-  state.bowlingTeam = payload.selected === 'batting' ? 'team2' : 'team1';
-
+  if (payload.tossWonByTeam === 1) {
+    state.battingTeam = payload.selected === 'batting' ? 'team1' : 'team2';
+    state.bowlingTeam = payload.selected === 'batting' ? 'team2' : 'team1';
+  } else {
+    state.bowlingTeam = payload.selected === 'batting' ? 'team1' : 'team2';
+    state.battingTeam = payload.selected === 'batting' ? 'team2' : 'team1';
+  }
   //show init players dialog
   state.initPlayersDialogVisible = true;
 };
@@ -54,6 +59,14 @@ export const updateInitPlayers = (state, {payload}) => {
   state.inningsOverDialogVisible = false;
   state.needInningsChange = false;
 };
+
+export const getInitialTypes = () => ({
+  wide: false,
+  noBall: false,
+  byes: false,
+  legByes: false,
+  wicket: false,
+});
 
 //getters
 export const getTeams = (state) => {

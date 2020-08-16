@@ -5,7 +5,7 @@ import {getOver} from '../../../../cricket-utils';
 
 const ScoreboardMiniRow = ({team, overs, isBatting}) => {
   return (
-    <View style={CommonStyles.matchStatusRow}>
+    <View style={CommonStyles.horizontalWithSpace}>
       <View>
         <Text style={isBatting ? CommonStyles.selectedRowText : {}}>
           {team.name}

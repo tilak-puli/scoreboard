@@ -16,12 +16,13 @@ export const retire = (state) => {
   striker.isRetired = true;
 
   if (isAllOut(battingTeam)) {
-    state.inning++;
-    state.inningsOverDialogVisible = true;
-    return;
-  }
+    state.innings++;
+    state.needInningsChange = true;
 
-  state.nextBatsmanDialogVisible = true;
+    state.inningsOverDialogVisible = true;
+  } else {
+    state.nextBatsmanDialogVisible = true;
+  }
 };
 
 export const swapBatsman = (battingTeam) => {

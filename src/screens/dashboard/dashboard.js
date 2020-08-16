@@ -10,12 +10,14 @@ import RunsInputDialog from './components/run-input-dailog/runs-input-dailog-con
 import NextBatsmanDialog from './components/next-player-dialog.js/next-batsman-dialog-container';
 import NextBowlerDialog from './components/next-player-dialog.js/next-bowler-dialog-container';
 import Actions from './components/actions/actions-container';
+import BallType from './components/ball-type/ball-type-container';
 
 const Dashboard = ({}) => {
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />
       <CurrentPlayers />
+      <BallType />
       <View style={CommonStyles.horizontal}>
         <RunsInput />
         <Actions />

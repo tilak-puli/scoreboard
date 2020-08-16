@@ -17,7 +17,7 @@ const CommonStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  matchStatusRow: {
+  horizontalWithSpace: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

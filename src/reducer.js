@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {combineReducers} from 'redux';
 import {
+  getInitialTypes,
   teamInitialState,
   updateInitPlayers,
   updateMatchBasicDetails,
 } from './reducers/init-reducers';
-import {addBall} from './reducers/score-reducers';
+import {addBall, updateSelectedType} from './reducers/score-reducers';
 import {
   updateInitPlayersDialogVisible,
   updateInningsOverDialogVisible,
@@ -23,10 +24,13 @@ import {
 export const getInitialState = () => ({
   team1: teamInitialState('team1'),
   team2: teamInitialState('team2'),
-  overs: 0,
-  innings: 1,
   battingTeam: 'team1',
   bowlingTeam: 'team2',
+
+  overs: 0,
+  innings: 1,
+
+  selectedTypes: getInitialTypes(),
   runsInputDialogVisible: false,
   NextPlayerDialogVisible: false,
   inningsOverDialogVisible: false,
@@ -40,7 +44,9 @@ export const matchSlice = createSlice({
     createNewMatch,
     updateMatchBasicDetails,
     updateInitPlayers,
+
     addBall,
+    updateSelectedType,
 
     undo,
     swap,

@@ -26,7 +26,6 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
         />
         <Input
           label={'overs'}
-          textContentType={'number'}
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"
         />
