@@ -8,12 +8,12 @@ const ScoreboardMini = ({team1, team2, overs, battingTeam}) => {
       <ScoreboardMiniRow
         team={team1}
         overs={overs}
-        batting={battingTeam === team1.name}
+        isBatting={battingTeam === team1.name}
       />
       <ScoreboardMiniRow
         team={team2}
         overs={overs}
-        batting={battingTeam === team2.name}
+        isBatting={battingTeam === team2.name}
       />
     </Card>
   );

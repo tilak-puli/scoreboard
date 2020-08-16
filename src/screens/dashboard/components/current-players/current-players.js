@@ -2,28 +2,52 @@ import {Card, Text} from 'react-native-elements';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TableStyles} from '../../../../stylesheet';
+import {getOver} from '../../../../cricket-utils';
 
-function getBatsmanRow(batsman) {
+const CurrentPlayers = ({striker, nonStriker, bowler}) => {
+  if (!striker || !nonStriker || !bowler) {
+    return (
+      <Card>
+        {getBatsmanHeader()}
+        {getBowlerHeader()}
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      {getBatsmanHeader()}
+      <View>
+        {getBatsmanRow(striker)}
+        {getBatsmanRow(nonStriker)}
+      </View>
+      {getBowlerHeader()}
+      <View>{getBowlerRow(bowler)}</View>
+    </Card>
+  );
+};
+
+function getBatsmanRow({name, batting}) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text style={TableStyles.nameItem}>{batsman.name}</Text>
-      <Text style={TableStyles.rowItem}>{batsman.runs}</Text>
-      <Text style={TableStyles.rowItem}>{batsman.balls}</Text>
-      <Text style={TableStyles.rowItem}>{batsman.fours}</Text>
-      <Text style={TableStyles.rowItem}>{batsman.sixers}</Text>
-      <Text style={TableStyles.rowItem}>{batsman.strikeRate}</Text>
+      <Text style={TableStyles.nameItem}>{name}</Text>
+      <Text style={TableStyles.rowItem}>{batting.runs}</Text>
+      <Text style={TableStyles.rowItem}>{batting.balls}</Text>
+      <Text style={TableStyles.rowItem}>{batting.fours}</Text>
+      <Text style={TableStyles.rowItem}>{batting.sixers}</Text>
+      <Text style={TableStyles.rowItem}>{batting.strikeRate}</Text>
     </View>
   );
 }
-function getBowlerRow(bowler) {
+function getBowlerRow({name, bowling}) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text style={TableStyles.nameItem}>{bowler.name}</Text>
-      <Text style={TableStyles.rowItem}>{bowler.overs}</Text>
-      <Text style={TableStyles.rowItem}>{bowler.maidens}</Text>
-      <Text style={TableStyles.rowItem}>{bowler.runs}</Text>
-      <Text style={TableStyles.rowItem}>{bowler.wickets}</Text>
-      <Text style={TableStyles.rowItem}>{bowler.economyRate}</Text>
+      <Text style={TableStyles.nameItem}>{name}</Text>
+      <Text style={TableStyles.rowItem}>{getOver(bowling.balls)}</Text>
+      <Text style={TableStyles.rowItem}>{bowling.maidens}</Text>
+      <Text style={TableStyles.rowItem}>{bowling.runs}</Text>
+      <Text style={TableStyles.rowItem}>{bowling.wickets}</Text>
+      <Text style={TableStyles.rowItem}>{bowling.economyRate}</Text>
     </View>
   );
 }
@@ -67,17 +91,4 @@ function getBowlerHeader() {
     </View>
   );
 }
-
-const CurrentPlayers = ({striker, nonStriker, bowler}) => {
-  return (
-    <Card>
-      {getBatsmanHeader()}
-      {getBatsmanRow(striker)}
-      {getBatsmanRow(nonStriker)}
-      {getBowlerHeader()}
-      {getBowlerRow(bowler)}
-    </Card>
-  );
-};
-
 export default CurrentPlayers;

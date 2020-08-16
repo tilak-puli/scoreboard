@@ -1,13 +1,18 @@
 import {connect} from 'react-redux';
 import CurrentPlayers from './current-players';
+import {
+  getCurrentBowler,
+  getNonStriker,
+  getStriker,
+  getTeams,
+} from '../../../../reducers/init-reducers';
 
 const mapStateToProps = ({match}) => {
-  const battingTeam = match[match.battingTeam];
-  const bowlingTeam = match[match.bowlingTeam];
+  const {battingTeam, bowlingTeam} = getTeams(match);
   return {
-    striker: battingTeam.batsPersons[battingTeam.strikerIndex],
-    nonStriker: battingTeam.batsPersons[battingTeam.nonStrikerIndex],
-    bowler: bowlingTeam.bowlers[bowlingTeam.bowlerIndex],
+    striker: getStriker(battingTeam),
+    nonStriker: getNonStriker(battingTeam),
+    bowler: getCurrentBowler(bowlingTeam),
   };
 };
 

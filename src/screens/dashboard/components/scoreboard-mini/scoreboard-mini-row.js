@@ -1,21 +1,22 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import CommonStyles from '../../../../stylesheet';
+import {getOver} from '../../../../cricket-utils';
 
-const ScoreboardMiniRow = ({team, overs, batting}) => {
+const ScoreboardMiniRow = ({team, overs, isBatting}) => {
   return (
     <View style={CommonStyles.matchStatusRow}>
       <View>
-        <Text style={batting ? CommonStyles.selectedRowText : {}}>
+        <Text style={isBatting ? CommonStyles.selectedRowText : {}}>
           {team.name}
         </Text>
       </View>
       <View style={CommonStyles.horizontal}>
-        <Text style={batting ? CommonStyles.selectedRowText : {}}>
+        <Text style={isBatting ? CommonStyles.selectedRowText : {}}>
           {team.runs}/{team.wickets}{' '}
         </Text>
-        <Text style={batting ? CommonStyles.selectedRowText : {}}>
-          ({team.overs}/{overs})
+        <Text style={isBatting ? CommonStyles.selectedRowText : {}}>
+          ({getOver(team.balls)}/{overs})
         </Text>
       </View>
     </View>

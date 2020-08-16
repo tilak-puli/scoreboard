@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from './screens/home/home';
+import Home from './screens/home/home-container';
 import TeamNames from './screens/team-names/team-names-container';
 import Dashboard from './screens/dashboard/dashboard-container';
 const Stack = createStackNavigator();

@@ -1,66 +1,30 @@
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import React from 'react';
+import {SafeAreaView, View} from 'react-native';
 import ScoreboardMini from './components/scoreboard-mini/scoreboard-mini-container';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  SlideAnimation,
-  DialogFooter,
-  DialogButton,
-} from 'react-native-popup-dialog';
-import {Input} from 'react-native-elements';
+
 import CommonStyles from '../../stylesheet';
 import CurrentPlayers from './components/current-players/current-players-container';
+import RunsInput from './components/runs-input/runs-input-container';
+import InitPlayersDialog from './components/init-players-dailog/init-players-dailog-container';
+import RunsInputDialog from './components/run-input-dailog/runs-input-dailog-container';
+import NextBatsmanDialog from './components/next-player-dialog.js/next-batsman-dialog-container';
+import NextBowlerDialog from './components/next-player-dialog.js/next-bowler-dialog-container';
+import Actions from './components/actions/actions-container';
 
-const Dashboard = ({updateInitPlayers}) => {
-  const [striker, updateStriker] = useState('');
-  const [nonStriker, updateNonStriker] = useState('');
-  const [bowler, updateBowler] = useState('');
-  const [isVisible, updateVisible] = useState(true);
-
+const Dashboard = ({}) => {
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />
       <CurrentPlayers />
-      <Dialog
-        dialogTitle={
-          <DialogTitle title="One Last form....before exciting match" />
-        }
-        width={'90%'}
-        visible={isVisible}
-        dialogAnimation={
-          new SlideAnimation({
-            slideFrom: 'bottom',
-          })
-        }>
-        <DialogContent>
-          <Input
-            onChangeText={updateStriker}
-            label={'Striker Name'}
-            placeholder="Enter Striker Name"
-          />
-          <Input
-            onChangeText={updateNonStriker}
-            label={'Non Striker Name'}
-            placeholder="Enter Non Striker Name"
-          />
-          <Input
-            onChangeText={updateBowler}
-            label={'Bowler Name'}
-            placeholder="Enter Bowler Name"
-          />
-        </DialogContent>
-        <DialogFooter>
-          <DialogButton
-            onPress={() => {
-              updateInitPlayers(striker, nonStriker, bowler);
-              updateVisible(false);
-            }}
-            text="Start Match"
-          />
-        </DialogFooter>
-      </Dialog>
+      <View style={CommonStyles.horizontal}>
+        <RunsInput />
+        <Actions />
+      </View>
+
+      <InitPlayersDialog />
+      <RunsInputDialog />
+      <NextBatsmanDialog />
+      <NextBowlerDialog />
     </SafeAreaView>
   );
 };

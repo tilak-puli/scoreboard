@@ -10,7 +10,7 @@ const CommonStyles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  dailog: {
+  dialog: {
     width: '90%',
   },
   horizontal: {
@@ -28,6 +28,35 @@ const CommonStyles = StyleSheet.create({
   selectedRowText: {
     fontSize: 20,
   },
+  actionsContainer: {
+    width: '30%',
+    height: 200,
+    justifyContent: 'space-between',
+  },
+  actionsWrapper: {
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+});
+
+export const RunsInputStyles = StyleSheet.create({
+  runBtn: {
+    width: 40,
+    margin: 5,
+    borderRadius: 20,
+  },
+  runBtnText: {fontSize: 18},
+  innerCard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  card: {
+    width: '55%',
+    height: 200,
+  },
 });
 
 export const TableStyles = StyleSheet.create({
@@ -42,13 +71,13 @@ export const TableStyles = StyleSheet.create({
   },
   rowItemFade: {
     color: 'grey',
-    width: 20,
+    width: 40,
   },
   nameItem: {
     width: 90,
   },
   rowItem: {
-    width: 20,
+    width: 40,
   },
 });
 
