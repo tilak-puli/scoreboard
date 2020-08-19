@@ -66,6 +66,10 @@ export const updateSelectedType = (state, {payload}) => {
   state.selectedTypes = {...state.selectedTypes, [payload.type]: payload.value};
 };
 
+const logBall = (battingTeam, runs, extras, types) => {
+  battingTeam.ballsLog.push({runs, extras, types});
+};
+
 function updateBall(state, originalRuns) {
   const {battingTeam, bowlingTeam} = getTeams(state);
   const {bowling} = getCurrentBowler(bowlingTeam);
@@ -83,6 +87,7 @@ function updateBall(state, originalRuns) {
     battingTeam.wickets++;
     bowling.wickets++;
   }
+  logBall(battingTeam, runs, extras, state.selectedTypes);
 }
 
 function updateBattingTeam(battingTeam, runs, isBallCounted) {

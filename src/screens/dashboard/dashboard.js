@@ -12,12 +12,14 @@ import NextBowlerDialog from './components/next-player-dialog.js/next-bowler-dia
 import Actions from './components/actions/actions-container';
 import BallType from './components/ball-type/ball-type-container';
 import WicketDialog from './components/wicket-dailog/wicket-dialog-container';
+import PreviousBalls from './components/previous-balls/previous-balls-container';
 
 const Dashboard = ({}) => {
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />
       <CurrentPlayers />
+      <PreviousBalls />
       <BallType />
       <View style={CommonStyles.horizontal}>
         <RunsInput />

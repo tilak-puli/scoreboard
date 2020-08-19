@@ -19,6 +19,7 @@ export const teamInitialState = (name) => ({
   wickets: 0,
   retiredCounts: 0,
   balls: 0,
+  ballsLog: [],
   players: [],
   strikerIndex: null,
   nonStrikerIndex: null,

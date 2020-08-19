@@ -59,6 +59,27 @@ export const RunsInputStyles = StyleSheet.create({
   },
 });
 
+export const BallLogStyles = StyleSheet.create({
+  ballLog: {
+    height: 70,
+  },
+  ballContainer: {
+    width: 40,
+    height: 40,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: 20,
+    borderWidth: 1,
+    marginRight: 10,
+
+    justifyContent: 'center',
+  },
+  ballText: {
+    fontSize: 20,
+    textAlign: 'center',
+  },
+});
+
 export const TableStyles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
