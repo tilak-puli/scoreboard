@@ -1,0 +1,9 @@
+export const WICKET_TYPES = {
+  RUN_OUT: 'RUN_OUT',
+  LBW: 'LBW',
+  BOWLED: 'BOWLED',
+  CATCH: 'CATCH',
+  STUMP_OUT: 'STUMP_OUT',
+  HIT_WICKET: 'HIT_WICKET',
+  OTHER: 'OTHER',
+};

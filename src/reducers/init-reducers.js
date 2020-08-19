@@ -66,6 +66,7 @@ export const getInitialTypes = () => ({
   byes: false,
   legByes: false,
   wicket: false,
+  wicketType: null,
 });
 
 //getters

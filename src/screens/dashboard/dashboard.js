@@ -11,6 +11,7 @@ import NextBatsmanDialog from './components/next-player-dialog.js/next-batsman-d
 import NextBowlerDialog from './components/next-player-dialog.js/next-bowler-dialog-container';
 import Actions from './components/actions/actions-container';
 import BallType from './components/ball-type/ball-type-container';
+import WicketDialog from './components/wicket-dailog/wicket-dialog-container';
 
 const Dashboard = ({}) => {
   return (
@@ -23,6 +24,7 @@ const Dashboard = ({}) => {
         <Actions />
       </View>
 
+      <WicketDialog />
       <InitPlayersDialog />
       <RunsInputDialog />
       <NextBatsmanDialog />

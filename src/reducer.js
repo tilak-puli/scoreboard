@@ -13,6 +13,7 @@ import {
   updateNextBatsmanDialogVisible,
   updateNextBowlerDialogVisible,
   updateRunsInputDialogVisible,
+  updateWicketDialogVisible,
 } from './reducers/dialog-reducers';
 import {retire, swap, undo} from './reducers/actions-reducers';
 import {
@@ -31,6 +32,9 @@ export const getInitialState = () => ({
   innings: 1,
 
   selectedTypes: getInitialTypes(),
+  selectedRuns: null,
+
+  wicketDialogVisible: false,
   runsInputDialogVisible: false,
   NextPlayerDialogVisible: false,
   inningsOverDialogVisible: false,
@@ -55,6 +59,7 @@ export const matchSlice = createSlice({
     nextBatsman,
     nextBowler,
 
+    updateWicketDialogVisible,
     updateRunsInputDialogVisible,
     updateNextBatsmanDialogVisible,
     updateNextBowlerDialogVisible,
