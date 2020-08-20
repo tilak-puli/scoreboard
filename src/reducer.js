@@ -31,6 +31,8 @@ export const getInitialState = () => ({
   overs: 0,
   innings: 1,
 
+  validBalls: 0,
+
   selectedTypes: getInitialTypes(),
   selectedRuns: null,
 

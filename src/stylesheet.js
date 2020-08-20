@@ -66,7 +66,7 @@ export const BallLogStyles = StyleSheet.create({
   ballContainer: {
     width: 40,
     height: 40,
-    borderColor: 'black',
+    borderColor: 'gray',
     borderStyle: 'solid',
     borderRadius: 20,
     borderWidth: 1,
@@ -76,6 +76,7 @@ export const BallLogStyles = StyleSheet.create({
   },
   ballText: {
     fontSize: 20,
+    color: '#444444',
     textAlign: 'center',
   },
 });

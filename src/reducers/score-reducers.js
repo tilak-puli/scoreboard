@@ -47,13 +47,13 @@ export const addBall = (state, {payload}) => {
   }
 
   const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
-  const oneOverCompleted =
-    battingTeam.balls % 6 === 0 && isBallCounted(state.selectedTypes);
+  const oneOverCompleted = state.validBalls >= 6;
 
   if (allOversOver) {
     state.inningsOverDialogVisible = true;
     state.needInningsChange = true;
     state.innings++;
+    state.validBalls = 0;
     swapTeams(state);
   } else if (oneOverCompleted) {
     swapBatsman(battingTeam);
@@ -77,8 +77,17 @@ function updateBall(state, originalRuns) {
   const types = state.selectedTypes;
 
   const {extras, runs} = categorizeRuns(types, originalRuns);
+  const ballCounted = isBallCounted(types);
 
-  updateBattingTeam(battingTeam, runs + extras, isBallCounted(types));
+  if (ballCounted) {
+    if (state.validBalls !== 6) {
+      state.validBalls++;
+    } else {
+      state.validBalls = 0;
+    }
+  }
+
+  updateBattingTeam(battingTeam, runs + extras, ballCounted);
   updateStriker(batting, runs, types);
   updateBowler(bowling, runs + extras);
 
