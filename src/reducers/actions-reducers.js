@@ -1,5 +1,4 @@
 import {getStriker, getTeams} from './init-reducers';
-import {isAllOut} from './match-reducers';
 
 export const undo = (state) => {
   if (state.prevStates.length) {
@@ -21,15 +20,7 @@ export const retire = (state) => {
 
   battingTeam.retiredCounts++;
   striker.isRetired = true;
-
-  if (isAllOut(battingTeam)) {
-    state.innings++;
-    state.needInningsChange = true;
-
-    state.inningsOverDialogVisible = true;
-  } else {
-    state.nextBatsmanDialogVisible = true;
-  }
+  state.nextBatsmanDialogVisible = true;
 };
 
 export const swapBatsman = (battingTeam) => {

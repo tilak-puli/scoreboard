@@ -1,5 +1,6 @@
 import {getPlayerOrNewPlayerIndex, getTeams} from './init-reducers';
 import {getInitialState} from '../reducer';
+import {handleInningsChange, handleMatchOver} from './score-reducers';
 
 export const createNewMatch = () => getInitialState();
 
@@ -21,6 +22,13 @@ export const nextBowler = (state, {payload}) => {
   );
   state.nextBowlerDialogVisible = false;
   state.needBowlerChange = false;
+};
+
+export const endInnings = (state) => {
+  if (state.innings === 2) {
+    return handleMatchOver(state);
+  }
+  handleInningsChange(state);
 };
 
 export const isAllOut = (team) => team.retiredCounts + team.wickets === 10;

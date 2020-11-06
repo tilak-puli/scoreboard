@@ -18,6 +18,7 @@ import {
 import {retire, swap, undo} from './reducers/actions-reducers';
 import {
   createNewMatch,
+  endInnings,
   nextBatsman,
   nextBowler,
 } from './reducers/match-reducers';
@@ -67,6 +68,8 @@ export const matchSlice = createSlice({
 
     nextBatsman,
     nextBowler,
+
+    endInnings,
 
     updateWicketDialogVisible,
     updateRunsInputDialogVisible,

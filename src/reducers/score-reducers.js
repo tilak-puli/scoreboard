@@ -7,6 +7,7 @@ import {
 import {getOver, getOverVal} from '../cricket-utils';
 import {swapBatsman, swapTeams} from './actions-reducers';
 import {current} from '@reduxjs/toolkit';
+import {endInnings} from './match-reducers';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
@@ -113,7 +114,7 @@ function logState(state) {
   state.prevStates.push(rest);
 }
 
-function handleMatchOver(state) {
+export function handleMatchOver(state) {
   const {battingTeam, bowlingTeam} = getTeams(state);
 
   if (battingTeam.runs > bowlingTeam.runs) {
@@ -126,6 +127,21 @@ function handleMatchOver(state) {
   state.matchOverDialogVisible = true;
 }
 
+export function handleInningsChange(state) {
+  state.inningsOverDialogVisible = true;
+  state.needInningsChange = true;
+  state.innings++;
+  state.validBalls = 0;
+  swapTeams(state);
+}
+
+function handleOverChange(battingTeam, state) {
+  swapBatsman(battingTeam);
+  state.nextBowlerDialogVisible = true;
+  state.needBowlerChange = true;
+  state.validBalls = 0;
+}
+
 function finalize(state) {
   const {battingTeam, bowlingTeam} = getTeams(state);
 
@@ -136,19 +152,8 @@ function finalize(state) {
   if (chased) {
     handleMatchOver(state);
   } else if (allOversOver) {
-    if (state.innings === 2) {
-      handleMatchOver(state);
-    } else {
-      state.inningsOverDialogVisible = true;
-      state.needInningsChange = true;
-      state.innings++;
-      state.validBalls = 0;
-      swapTeams(state);
-    }
+    endInnings(state);
   } else if (oneOverCompleted) {
-    swapBatsman(battingTeam);
-    state.nextBowlerDialogVisible = true;
-    state.needBowlerChange = true;
-    state.validBalls = 0;
+    handleOverChange(battingTeam, state);
   }
 }

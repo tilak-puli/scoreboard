@@ -13,6 +13,7 @@ import Actions from './components/actions/actions-container';
 import BallType from './components/ball-type/ball-type-container';
 import WicketDialog from './components/wicket-dailog/wicket-dialog-container';
 import PreviousBalls from './components/previous-balls/previous-balls-container';
+import MatchActions from './components/match-actions/match-actions-container';
 
 const Dashboard = ({}) => {
   return (
@@ -25,6 +26,7 @@ const Dashboard = ({}) => {
         <RunsInput />
         <Actions />
       </View>
+      <MatchActions />
 
       <WicketDialog />
       <InitPlayersDialog />
