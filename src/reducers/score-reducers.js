@@ -24,22 +24,20 @@ function categorizeRuns(types, originalRuns) {
 }
 
 export const addBall = (state, {payload}) => {
-  const {battingTeam} = getTeams(state);
-
-  if (state.selectedTypes.wicket && state.selectedRuns === null) {
-    state.selectedRuns = payload.runs;
-    state.wicketDialogVisible = true;
-    return;
-  }
-
   const runs = state.selectedRuns === null ? payload.runs : state.selectedRuns;
 
   if (state.needBowlerChange) {
     state.nextBowlerDialogVisible = true;
     return;
-  }
-  if (state.needInningsChange) {
+  } else if (state.needInningsChange) {
     state.inningsOverDialogVisible = true;
+    return;
+  } else if (state.matchOver) {
+    state.matchOverDialogVisible = true;
+    return;
+  } else if (state.selectedTypes.wicket && !state.selectedTypes.wicketType) {
+    state.selectedRuns = payload.runs;
+    state.wicketDialogVisible = true;
     return;
   } else {
     updateBall(state, runs);
@@ -47,20 +45,7 @@ export const addBall = (state, {payload}) => {
     state.selectedRuns = null;
   }
 
-  const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
-  const oneOverCompleted = state.validBalls >= 6;
-
-  if (allOversOver) {
-    state.inningsOverDialogVisible = true;
-    state.needInningsChange = true;
-    state.innings++;
-    state.validBalls = 0;
-    swapTeams(state);
-  } else if (oneOverCompleted) {
-    swapBatsman(battingTeam);
-    state.nextBowlerDialogVisible = true;
-    state.needBowlerChange = true;
-  }
+  finalize(state);
 };
 
 export const updateSelectedType = (state, {payload}) => {
@@ -83,11 +68,7 @@ function updateBall(state, originalRuns) {
   const ballCounted = isBallCounted(types);
 
   if (ballCounted) {
-    if (state.validBalls !== 6) {
-      state.validBalls++;
-    } else {
-      state.validBalls = 0;
-    }
+    state.validBalls++;
   }
 
   updateBattingTeam(battingTeam, runs + extras, ballCounted);
@@ -98,6 +79,7 @@ function updateBall(state, originalRuns) {
     batting.isOut = true;
     battingTeam.wickets++;
     bowling.wickets++;
+    state.wicketDialogVisible = true;
   }
   logBall(battingTeam, runs, extras, state.selectedTypes);
 }
@@ -129,4 +111,44 @@ function logState(state) {
   if (state.prevStates.length >= 10) state.prevStates.shift();
   const {prevStates, ...rest} = current(state);
   state.prevStates.push(rest);
+}
+
+function handleMatchOver(state) {
+  const {battingTeam, bowlingTeam} = getTeams(state);
+
+  if (battingTeam.runs > bowlingTeam.runs) {
+    state.matchWonBy = state.battingTeam;
+  } else if (battingTeam.runs < bowlingTeam.runs) {
+    state.matchWonBy = state.bowlingTeam;
+  }
+
+  state.matchOver = true;
+  state.matchOverDialogVisible = true;
+}
+
+function finalize(state) {
+  const {battingTeam, bowlingTeam} = getTeams(state);
+
+  const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
+  const oneOverCompleted = state.validBalls >= 6;
+  let chased = state.innings === 2 && battingTeam.runs > bowlingTeam.runs;
+
+  if (chased) {
+    handleMatchOver(state);
+  } else if (allOversOver) {
+    if (state.innings === 2) {
+      handleMatchOver(state);
+    } else {
+      state.inningsOverDialogVisible = true;
+      state.needInningsChange = true;
+      state.innings++;
+      state.validBalls = 0;
+      swapTeams(state);
+    }
+  } else if (oneOverCompleted) {
+    swapBatsman(battingTeam);
+    state.nextBowlerDialogVisible = true;
+    state.needBowlerChange = true;
+    state.validBalls = 0;
+  }
 }

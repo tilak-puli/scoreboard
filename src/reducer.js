@@ -36,8 +36,13 @@ export const getInitialState = () => ({
   selectedTypes: getInitialTypes(),
   selectedRuns: null,
 
+  matchOver: false,
+  matchOverMessage: '',
+  matchWonBy: '',
+
   prevStates: [],
 
+  matchOverDialogVisible: false,
   wicketDialogVisible: false,
   runsInputDialogVisible: false,
   NextPlayerDialogVisible: false,

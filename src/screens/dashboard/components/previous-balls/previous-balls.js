@@ -20,11 +20,14 @@ const Ball = ({run, types = {}}) => {
     fontSize = 15;
   }
 
+  let ballText = run;
+  if (typeLetter) {
+    ballText = typeLetter;
+    if (run) ballText = '' + run + typeLetter;
+  }
   return (
     <View style={BallLogStyles.ballContainer}>
-      <Text style={{...BallLogStyles.ballText, fontSize}}>
-        {'' + run + typeLetter}
-      </Text>
+      <Text style={{...BallLogStyles.ballText, fontSize}}>{ballText}</Text>
     </View>
   );
 };
