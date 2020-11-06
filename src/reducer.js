@@ -10,6 +10,7 @@ import {addBall, updateSelectedType} from './reducers/score-reducers';
 import {
   updateInitPlayersDialogVisible,
   updateInningsOverDialogVisible,
+  updateMatchOverDialogVisible,
   updateNextBatsmanDialogVisible,
   updateNextBowlerDialogVisible,
   updateRunsInputDialogVisible,
@@ -72,6 +73,7 @@ export const matchSlice = createSlice({
     endInnings,
 
     updateWicketDialogVisible,
+    updateMatchOverDialogVisible,
     updateRunsInputDialogVisible,
     updateNextBatsmanDialogVisible,
     updateNextBowlerDialogVisible,

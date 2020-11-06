@@ -13,6 +13,11 @@ export const updateInningsOverDialogVisible = (state, {payload}) => {
 export const updateInitPlayersDialogVisible = (state, {payload}) => {
   state.initPlayersDialogVisible = payload.visible;
 };
+
 export const updateWicketDialogVisible = (state, {payload}) => {
   state.wicketDialogVisible = payload.visible;
+};
+
+export const updateMatchOverDialogVisible = (state, {payload}) => {
+  state.matchOverDialogVisible = payload.visible;
 };

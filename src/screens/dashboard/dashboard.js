@@ -14,6 +14,7 @@ import BallType from './components/ball-type/ball-type-container';
 import WicketDialog from './components/wicket-dailog/wicket-dialog-container';
 import PreviousBalls from './components/previous-balls/previous-balls-container';
 import MatchActions from './components/match-actions/match-actions-container';
+import MatchOverDialog from './components/match-over-dialog.js/match-over-dialog-container';
 
 const Dashboard = ({}) => {
   return (
@@ -28,6 +29,7 @@ const Dashboard = ({}) => {
       </View>
       <MatchActions />
 
+      <MatchOverDialog />
       <WicketDialog />
       <InitPlayersDialog />
       <RunsInputDialog />

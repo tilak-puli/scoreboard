@@ -114,13 +114,30 @@ function logState(state) {
   state.prevStates.push(rest);
 }
 
+function chasedMessage(name, runs, overs) {
+  return name + ' chased down ' + runs + 'in ' + overs + 'overs';
+}
+
+function defendedMessage(name, runs) {
+  return name + ' successfully defended ' + runs;
+}
+
 export function handleMatchOver(state) {
   const {battingTeam, bowlingTeam} = getTeams(state);
 
   if (battingTeam.runs > bowlingTeam.runs) {
     state.matchWonBy = state.battingTeam;
+    state.matchOverMessage = chasedMessage(
+      battingTeam.name,
+      bowlingTeam.runs,
+      getOver(battingTeam.balls),
+    );
   } else if (battingTeam.runs < bowlingTeam.runs) {
     state.matchWonBy = state.bowlingTeam;
+    state.matchOverMessage = defendedMessage(
+      bowlingTeam.name,
+      bowlingTeam.runs,
+    );
   }
 
   state.matchOver = true;

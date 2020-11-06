@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
   Dialog,
@@ -8,49 +8,35 @@ import {
   DialogTitle,
   SlideAnimation,
 } from 'react-native-popup-dialog';
-import {Input} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import {Dimensions} from 'react-native';
+import CommonStyles from '../../../../stylesheet';
 
-const NextPlayerDialog = ({
-  playerType = 'player',
-  isVisible,
-  hide,
-  onContinue,
-}) => {
-  const [playerName, updatePlayerName] = useState('');
-  const clearAndHide = () => {
-    updatePlayerName('');
-    hide();
-  };
+const MatchOverDialog = ({name, message, visible, hide}) => {
   return (
     <Dialog
       width={Dimensions.get('window').width * 0.9}
       onTouchOutside={hide}
-      dialogTitle={<DialogTitle title="Next Player" />}
-      visible={isVisible}
+      dialogTitle={<DialogTitle title={'CONGRATULATIONS!!'} />}
+      visible={visible}
       dialogAnimation={
         new SlideAnimation({
           slideFrom: 'bottom',
         })
       }>
       <DialogContent>
-        <Input
-          onChangeText={updatePlayerName}
-          label={'Enter next ' + playerType}
-        />
+        <Text style={CommonStyles.bigTextGreen}>{name}</Text>
+        <Text style={CommonStyles.centerText}>won the match</Text>
+        <Text />
+        <Text style={[CommonStyles.centerText, CommonStyles.serif]}>
+          {message}
+        </Text>
       </DialogContent>
       <DialogFooter>
-        <DialogButton onPress={clearAndHide} text="Cancel" />
-        <DialogButton
-          onPress={() => {
-            onContinue(playerName);
-            clearAndHide();
-          }}
-          text="Continue"
-        />
+        <DialogButton onPress={hide} text="Close" />
       </DialogFooter>
     </Dialog>
   );
 };
 
-export default NextPlayerDialog;
+export default MatchOverDialog;

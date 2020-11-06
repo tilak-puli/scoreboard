@@ -1,8 +1,16 @@
 import {connect} from 'react-redux';
-import NextPlayerDialog from './match-over-dailog';
+import MatchOverDialog from './match-over-dailog';
+import {matchSlice} from '../../../../reducer';
 
 const mapStateToProps = ({match}) => ({
-  matchOver: match.matchOver,
+  visible: match.matchOverDialogVisible,
+  name: match.matchWonBy,
+  message: match.matchOverMessage,
 });
 
-export default connect(mapStateToProps)(NextPlayerDialog);
+const mapDispatchToProps = (dispatch) => ({
+  hide: () =>
+    dispatch(matchSlice.actions.updateMatchOverDialogVisible({visible: false})),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchOverDialog);

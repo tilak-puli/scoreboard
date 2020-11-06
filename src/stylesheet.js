@@ -37,6 +37,18 @@ const CommonStyles = StyleSheet.create({
     height: '100%',
     justifyContent: 'space-between',
   },
+  bigTextGreen: {
+    fontSize: 30,
+    color: 'green',
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+  },
+  centerText: {
+    textAlign: 'center',
+  },
+  serif: {
+    fontFamily: 'serif',
+  },
 });
 
 export const RunsInputStyles = StyleSheet.create({
