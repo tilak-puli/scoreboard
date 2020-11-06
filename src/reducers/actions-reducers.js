@@ -1,7 +1,14 @@
 import {getStriker, getTeams} from './init-reducers';
 import {isAllOut} from './match-reducers';
 
-export const undo = () => {};
+export const undo = (state) => {
+  if (state.prevStates.length) {
+    return {
+      ...state.prevStates[state.prevStates.length - 1],
+      prevStates: state.prevStates.slice(0, state.prevStates.length - 1),
+    };
+  }
+};
 
 export const swap = (state) => {
   const {battingTeam} = getTeams(state);

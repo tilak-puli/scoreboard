@@ -6,6 +6,7 @@ import {
 } from './init-reducers';
 import {getOver, getOverVal} from '../cricket-utils';
 import {swapBatsman, swapTeams} from './actions-reducers';
+import {current} from '@reduxjs/toolkit';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
@@ -71,6 +72,8 @@ const logBall = (battingTeam, runs, extras, types) => {
 };
 
 function updateBall(state, originalRuns) {
+  logState(state);
+
   const {battingTeam, bowlingTeam} = getTeams(state);
   const {bowling} = getCurrentBowler(bowlingTeam);
   const {batting} = getStriker(battingTeam);
@@ -120,4 +123,10 @@ function isBallCounted({wide, noBall}) {
   if (wide || noBall) return false;
 
   return true;
+}
+
+function logState(state) {
+  if (state.prevStates.length >= 10) state.prevStates.shift();
+  const {prevStates, ...rest} = current(state);
+  state.prevStates.push(rest);
 }
