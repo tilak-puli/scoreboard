@@ -1,6 +1,7 @@
 import {
   getCurrentBowler,
   getInitialTypes,
+  getNonStriker,
   getStriker,
   getTeams,
 } from './init-reducers';
@@ -54,16 +55,25 @@ export const updateSelectedType = (state, {payload}) => {
   state.selectedTypes = {...state.selectedTypes, [payload.type]: payload.value};
 };
 
-const logBall = (battingTeam, runs, extras, types) => {
-  battingTeam.ballsLog.push({runs, extras, types});
+const logBall = (
+  battingTeam,
+  runs,
+  extras,
+  types,
+  batsmen = [],
+  bowler,
+  over,
+) => {
+  battingTeam.ballsLog.push({runs, extras, types, batsmen, bowler, over});
 };
 
 function updateBall(state, originalRuns) {
   logState(state);
 
   const {battingTeam, bowlingTeam} = getTeams(state);
-  const {bowling} = getCurrentBowler(bowlingTeam);
-  const {batting} = getStriker(battingTeam);
+  const {bowling, name: bowlerName} = getCurrentBowler(bowlingTeam);
+  const {batting, name} = getStriker(battingTeam);
+  const {name: NSName} = getNonStriker(battingTeam);
   const types = state.selectedTypes;
 
   const {extras, runs} = categorizeRuns(types, originalRuns);
@@ -83,7 +93,15 @@ function updateBall(state, originalRuns) {
     bowling.wickets++;
     state.wicketDialogVisible = true;
   }
-  logBall(battingTeam, runs, extras, state.selectedTypes);
+  logBall(
+    battingTeam,
+    runs,
+    extras,
+    state.selectedTypes,
+    [name, NSName],
+    bowlerName,
+    getOver(battingTeam.balls),
+  );
   st_mergeMatch(state);
 }
 

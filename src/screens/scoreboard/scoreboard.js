@@ -14,11 +14,11 @@ import {
 
 const Scoreboard = ({match}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
-  if (match.innings / 2 !== 0) {
+  if (match.innings / 2 === 0) {
     //if second or fourth innings
     battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
   }
-  let totalInnings = _.max([match.innings, 2]);
+  let totalInnings = _.max([match.innings, 1]);
 
   let inningsDivs = [];
 

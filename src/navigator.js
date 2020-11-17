@@ -6,6 +6,7 @@ import TeamNames from './screens/team-names/team-names-container';
 import Dashboard from './screens/dashboard/dashboard-container';
 import Scoreboard from './screens/scoreboard/scoreboard-container';
 import Matches from './screens/matches/matches-container';
+import Overs from './screens/overs/overs-container';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
@@ -29,6 +30,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Scoreboard"
         component={Scoreboard}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Overs"
+        component={Overs}
         options={{headerShown: false}}
       />
       <Stack.Screen
