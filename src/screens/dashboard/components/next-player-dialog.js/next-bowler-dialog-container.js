@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import NextPlayerDialog from './next-player-dailog';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   isVisible: match.nextBowlerDialogVisible,

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import MatchActions from './match-actions';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapDispatchToProps = (dispatch) => ({
   endInnings: () => dispatch(matchSlice.actions.endInnings()),

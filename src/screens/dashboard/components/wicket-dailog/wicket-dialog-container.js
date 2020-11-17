@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {matchSlice} from '../../../../reducer';
 import WicketDialog from './wicket-dialog';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   isVisible: match.wicketDialogVisible,

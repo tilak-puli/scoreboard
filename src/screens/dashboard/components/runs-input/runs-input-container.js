@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import RunsInput from './runs-input';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapDispatchToProps = (dispatch) => ({
   showRunsDialog: () =>

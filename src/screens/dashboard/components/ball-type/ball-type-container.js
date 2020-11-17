@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import BallType from './ball-type';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   selectedTypes: match.selectedTypes,

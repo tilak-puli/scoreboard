@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {BackHandler, SafeAreaView, View} from 'react-native';
 import ScoreboardMini from './components/scoreboard-mini/scoreboard-mini-container';
 
 import CommonStyles from '../../stylesheet';
@@ -17,6 +17,11 @@ import MatchActions from './components/match-actions/match-actions-container';
 import MatchOverDialog from './components/match-over-dialog.js/match-over-dialog-container';
 
 const Dashboard = ({navigation}) => {
+  useBackButton(() => {
+    navigation.navigate('Home');
+    return true;
+  });
+
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />
@@ -38,5 +43,17 @@ const Dashboard = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+/* useBackButton */
+function useBackButton(handler) {
+  // Frustration isolated! Yay! 🎉
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handler);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handler);
+    };
+  }, [handler]);
+}
 
 export default Dashboard;

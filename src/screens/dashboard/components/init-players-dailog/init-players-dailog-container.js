@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {matchSlice} from '../../../../reducer';
 import InitPlayersDialog from './init-players-dialog';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   isVisible: match.initPlayersDialogVisible || match.inningsOverDialogVisible,

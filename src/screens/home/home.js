@@ -10,8 +10,17 @@ const Home = ({navigation, createNewMatch}) => {
       <Card>
         <Button
           title="New Match"
+          buttonStyle={CommonStyles.basicMargin}
           onPress={() => {
             navigation.navigate('TeamSelector');
+            createNewMatch();
+          }}
+        />
+        <Button
+          title="View old matches"
+          buttonStyle={CommonStyles.basicMargin}
+          onPress={() => {
+            navigation.navigate('AllMatches');
             createNewMatch();
           }}
         />

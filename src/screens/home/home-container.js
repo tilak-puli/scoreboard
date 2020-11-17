@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {matchSlice} from '../../reducer';
 import Home from './home';
+import {matchSlice} from '../../reducers/match/reducer';
 
 const mapDispatchToProps = (dispatch) => ({
   createNewMatch: () => dispatch(matchSlice.actions.createNewMatch()),

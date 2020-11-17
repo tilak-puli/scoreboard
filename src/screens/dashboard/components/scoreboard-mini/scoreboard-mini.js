@@ -1,8 +1,10 @@
 import {Card} from 'react-native-elements';
 import React from 'react';
 import ScoreboardMiniRow from './scoreboard-mini-row';
+import {View} from 'react-native';
+import CommonStyles from '../../../../stylesheet';
 
-const ScoreboardMini = ({team1, team2, overs, battingTeam}) => {
+const ScoreboardMini = ({team1, team2, overs, battingTeam, actions = []}) => {
   return (
     <Card>
       <ScoreboardMiniRow
@@ -15,6 +17,7 @@ const ScoreboardMini = ({team1, team2, overs, battingTeam}) => {
         overs={overs}
         isBatting={battingTeam === 'team2'}
       />
+      <View style={CommonStyles.horizontalWithSpace}>{actions}</View>
     </Card>
   );
 };

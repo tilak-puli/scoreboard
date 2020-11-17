@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import MatchOverDialog from './match-over-dailog';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   visible: match.matchOverDialogVisible,

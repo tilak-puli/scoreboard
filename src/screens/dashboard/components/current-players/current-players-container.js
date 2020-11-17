@@ -5,7 +5,7 @@ import {
   getNonStriker,
   getStriker,
   getTeams,
-} from '../../../../reducers/init-reducers';
+} from '../../../../reducers/match/init-reducers';
 
 const mapStateToProps = ({match}) => {
   const {battingTeam, bowlingTeam} = getTeams(match);

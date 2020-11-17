@@ -1,6 +1,6 @@
 import {getPlayerOrNewPlayerIndex, getTeams} from './init-reducers';
-import {getInitialState} from '../reducer';
 import {handleInningsChange, handleMatchOver} from './score-reducers';
+import {getInitialState} from './reducer';
 
 export const createNewMatch = () => getInitialState();
 
@@ -11,6 +11,10 @@ export const nextBatsman = (state, {payload}) => {
     battingTeam,
     payload.name,
   );
+  battingTeam.players[battingTeam.strikerIndex].batting.positions[
+    state.innings - 1
+  ] = battingTeam.wickets + battingTeam.retiredCounts + 1;
+
   state.nextBatsmanDialogVisible = false;
 };
 
@@ -30,5 +34,10 @@ export const endInnings = (state) => {
   }
   handleInningsChange(state);
 };
+
+export const setMatch = (state, {payload}) => ({
+  prevStates: [],
+  ...payload.match,
+});
 
 export const isAllOut = (team) => team.retiredCounts + team.wickets === 10;

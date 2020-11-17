@@ -4,10 +4,11 @@ import {
   getStriker,
   getTeams,
 } from './init-reducers';
-import {getOver, getOverVal} from '../cricket-utils';
+import {getOver, getOverVal} from '../../cricket-utils';
 import {swapBatsman, swapTeams} from './actions-reducers';
 import {current} from '@reduxjs/toolkit';
 import {endInnings} from './match-reducers';
+import {st_mergeMatch} from './storage-reducers';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
@@ -83,6 +84,7 @@ function updateBall(state, originalRuns) {
     state.wicketDialogVisible = true;
   }
   logBall(battingTeam, runs, extras, state.selectedTypes);
+  st_mergeMatch(state);
 }
 
 function updateBattingTeam(battingTeam, runs, isBallCounted) {

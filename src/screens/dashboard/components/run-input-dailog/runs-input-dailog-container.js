@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import RunsInputDialog from './runs-input-dailog';
-import {matchSlice} from '../../../../reducer';
+import {matchSlice} from '../../../../reducers/match/reducer';
 
 const mapStateToProps = ({match}) => ({
   isVisible: match.runsInputDialogVisible,

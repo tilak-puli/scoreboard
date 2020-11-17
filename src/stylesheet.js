@@ -16,11 +16,15 @@ const CommonStyles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     alignItems: 'center',
+    margin: 5,
   },
   horizontalWithSpace: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  basicMargin: {
+    margin: 5,
   },
   horizontalLabel: {
     width: 100,

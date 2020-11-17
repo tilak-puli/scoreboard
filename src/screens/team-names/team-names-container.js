@@ -1,6 +1,6 @@
 import TeamNames from './team-names';
 import {connect} from 'react-redux';
-import {matchSlice} from '../../reducer';
+import {matchSlice} from '../../reducers/match/reducer';
 
 const mapDispatchToProps = (dispatch) => ({
   updateMatchBasicDetails: (
