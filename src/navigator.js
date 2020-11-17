@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from './screens/home/home-container';
 import TeamNames from './screens/team-names/team-names-container';
 import Dashboard from './screens/dashboard/dashboard-container';
+import Scoreboard from './screens/scoreboard/scoreboard-container';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
@@ -22,6 +23,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Scoreboard"
+        component={Scoreboard}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

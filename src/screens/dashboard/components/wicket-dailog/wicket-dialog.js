@@ -11,6 +11,7 @@ import {
 import {Picker} from 'native-base';
 import {WICKET_TYPES} from '../../../../constants';
 import {Input} from 'react-native-elements';
+import {Dimensions} from 'react-native';
 
 const WicketDialog = ({
   isVisible,
@@ -24,7 +25,7 @@ const WicketDialog = ({
   return (
     <Dialog
       dialogTitle={<DialogTitle title="wooh OUT!! How did that happen?" />}
-      width={'90%'}
+      width={Dimensions.get('window').width * 0.9}
       visible={isVisible}
       dialogAnimation={
         new SlideAnimation({

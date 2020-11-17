@@ -16,7 +16,7 @@ import PreviousBalls from './components/previous-balls/previous-balls-container'
 import MatchActions from './components/match-actions/match-actions-container';
 import MatchOverDialog from './components/match-over-dialog.js/match-over-dialog-container';
 
-const Dashboard = ({}) => {
+const Dashboard = ({navigation}) => {
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />
@@ -27,7 +27,7 @@ const Dashboard = ({}) => {
         <RunsInput />
         <Actions />
       </View>
-      <MatchActions />
+      <MatchActions navigation={navigation} />
 
       <MatchOverDialog />
       <WicketDialog />

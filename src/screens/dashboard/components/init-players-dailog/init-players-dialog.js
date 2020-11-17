@@ -9,6 +9,7 @@ import {
   SlideAnimation,
 } from 'react-native-popup-dialog';
 import {Input} from 'react-native-elements';
+import {Dimensions} from 'react-native';
 
 const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   const [striker, updateStriker] = useState('');
@@ -18,7 +19,7 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   return (
     <Dialog
       dialogTitle={<DialogTitle title="Let's start" />}
-      width={'90%'}
+      width={Dimensions.get('window').width * 0.9}
       visible={isVisible}
       dialogAnimation={
         new SlideAnimation({

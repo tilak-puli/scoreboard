@@ -3,12 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'scoreboard' do
+target 'GullyScoreboard' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'scoreboardTests' do
+  target 'GullyScoreboardTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -23,10 +23,10 @@ target 'scoreboard' do
   end
 end
 
-target 'scoreboard-tvOS' do
-  # Pods for scoreboard-tvOS
+target 'GullyScoreboard-tvOS' do
+  # Pods for GullyScoreboard-tvOS
 
-  target 'scoreboard-tvOSTests' do
+  target 'GullyScoreboard-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

@@ -27,7 +27,7 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
   );
 };
 
-function getBatsmanRow({name, batting}) {
+export function getBatsmanRow({name, batting}) {
   return (
     <View style={TableStyles.tableRow}>
       <Text style={TableStyles.nameItem}>{name}</Text>
@@ -39,7 +39,7 @@ function getBatsmanRow({name, batting}) {
     </View>
   );
 }
-function getBowlerRow({name, bowling}) {
+export function getBowlerRow({name, bowling}) {
   return (
     <View style={TableStyles.tableRow}>
       <Text style={TableStyles.nameItem}>{name}</Text>
@@ -52,43 +52,40 @@ function getBowlerRow({name, bowling}) {
   );
 }
 
-function getBatsmanHeader() {
-  return (
-    <View
-      style={StyleSheet.flatten([TableStyles.tableRow, TableStyles.headerRow])}>
-      <Text
-        style={StyleSheet.flatten([
-          TableStyles.rowItemFade,
-          TableStyles.nameItem,
-        ])}>
-        Batsperson
-      </Text>
-      <Text style={TableStyles.rowItemFade}>R</Text>
-      <Text style={TableStyles.rowItemFade}>B</Text>
-      <Text style={TableStyles.rowItemFade}>4s</Text>
-      <Text style={TableStyles.rowItemFade}>6s</Text>
-      <Text style={TableStyles.rowItemFade}>SR</Text>
-    </View>
-  );
-}
+export const getBatsmanHeader = () => (
+  <View
+    style={StyleSheet.flatten([TableStyles.tableRow, TableStyles.headerRow])}>
+    <Text
+      style={StyleSheet.flatten([
+        TableStyles.rowItemFade,
+        TableStyles.nameItem,
+      ])}>
+      Batsperson
+    </Text>
+    <Text style={TableStyles.rowItemFade}>R</Text>
+    <Text style={TableStyles.rowItemFade}>B</Text>
+    <Text style={TableStyles.rowItemFade}>4s</Text>
+    <Text style={TableStyles.rowItemFade}>6s</Text>
+    <Text style={TableStyles.rowItemFade}>SR</Text>
+  </View>
+);
 
-function getBowlerHeader() {
-  return (
-    <View
-      style={StyleSheet.flatten([TableStyles.tableRow, TableStyles.headerRow])}>
-      <Text
-        style={StyleSheet.flatten([
-          TableStyles.rowItemFade,
-          TableStyles.nameItem,
-        ])}>
-        Bowler
-      </Text>
-      <Text style={TableStyles.rowItemFade}>O</Text>
-      <Text style={TableStyles.rowItemFade}>M</Text>
-      <Text style={TableStyles.rowItemFade}>R</Text>
-      <Text style={TableStyles.rowItemFade}>W</Text>
-      <Text style={TableStyles.rowItemFade}>ER</Text>
-    </View>
-  );
-}
+export const getBowlerHeader = () => (
+  <View
+    style={StyleSheet.flatten([TableStyles.tableRow, TableStyles.headerRow])}>
+    <Text
+      style={StyleSheet.flatten([
+        TableStyles.rowItemFade,
+        TableStyles.nameItem,
+      ])}>
+      Bowler
+    </Text>
+    <Text style={TableStyles.rowItemFade}>O</Text>
+    <Text style={TableStyles.rowItemFade}>M</Text>
+    <Text style={TableStyles.rowItemFade}>R</Text>
+    <Text style={TableStyles.rowItemFade}>W</Text>
+    <Text style={TableStyles.rowItemFade}>ER</Text>
+  </View>
+);
+
 export default CurrentPlayers;

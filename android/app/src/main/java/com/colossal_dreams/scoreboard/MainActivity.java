@@ -1,4 +1,4 @@
-package com.scoreboard;
+package com.colossal_dreams.scoreboard;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "scoreboard";
+    return "GullyScoreboard";
   }
 }

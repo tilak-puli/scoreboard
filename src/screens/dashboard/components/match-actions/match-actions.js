@@ -2,9 +2,13 @@ import {Button, Card} from 'react-native-elements';
 import React from 'react';
 import CommonStyles from '../../../../stylesheet';
 
-const MatchActions = ({endInnings}) => (
+const MatchActions = ({navigation, endInnings}) => (
   <Card wrapperStyle={CommonStyles.horizontalWithSpace}>
     <Button title={'End Innings'} onPress={endInnings} />
+    <Button
+      title={'Score Board'}
+      onPress={() => navigation.navigate('Scoreboard')}
+    />
   </Card>
 );
 
