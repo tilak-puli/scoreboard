@@ -16,7 +16,6 @@ const CommonStyles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 5,
   },
   horizontalWithSpace: {
     flexDirection: 'row',
@@ -53,6 +52,11 @@ const CommonStyles = StyleSheet.create({
   serif: {
     fontFamily: 'serif',
   },
+  line: {
+    fontSize: 20,
+    margin: 5,
+    borderRightWidth: 1.5,
+  },
 });
 
 export const RunsInputStyles = StyleSheet.create({
@@ -86,7 +90,8 @@ export const BallLogStyles = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 20,
     borderWidth: 1,
-    marginRight: 10,
+    marginLeft: 5,
+    marginRight: 5,
 
     justifyContent: 'center',
   },

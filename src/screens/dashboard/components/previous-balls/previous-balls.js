@@ -40,18 +40,27 @@ const shortTypes = {
 };
 
 const PreviousBalls = ({log = []}) => {
+  const last6Balls = _.takeRight(log, 6);
+  const last6BallDivs = [];
+  let currentOver = parseInt(_.get(last6Balls[0], 'over'));
+
+  last6Balls.forEach((ball, i) => {
+    if (currentOver !== parseInt(ball.over)) {
+      last6BallDivs.push(<Text style={CommonStyles.line} />);
+      currentOver = parseInt(ball.over);
+    }
+    last6BallDivs.push(
+      <Ball run={ball.runs + ball.extras} types={ball.types} key={i} />,
+    );
+  });
+
   return (
     <Card
       containerStyle={BallLogStyles.ballLog}
       wrapperStyle={CommonStyles.horizontal}>
-      {_.takeRight(log, 7).map((ballLog, i) => (
-        <Ball
-          run={ballLog.runs + ballLog.extras}
-          types={ballLog.types}
-          key={i}
-        />
-      ))}
+      {last6BallDivs}
     </Card>
   );
 };
+
 export default PreviousBalls;

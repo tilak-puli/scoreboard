@@ -60,7 +60,7 @@ const OverDiv = ({over, balls}) => (
 
 const OverHeading = ({over, balls}) => (
   <View style={styles.runs}>
-    <Text>over : {over}</Text>
+    <Text>Over : {over}</Text>
     <Text>
       {balls.reduce((t, ball) => t + ball.runs + ball.extras, 0)} runs
     </Text>

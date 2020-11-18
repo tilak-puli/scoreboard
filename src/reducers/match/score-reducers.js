@@ -48,7 +48,8 @@ export const addBall = (state, {payload}) => {
     state.selectedRuns = null;
   }
 
-  finalize(state);
+  finalize(state, runs);
+  st_mergeMatch(state);
 };
 
 export const updateSelectedType = (state, {payload}) => {
@@ -85,7 +86,7 @@ function updateBall(state, originalRuns) {
 
   updateBattingTeam(battingTeam, runs + extras, ballCounted);
   updateStriker(batting, runs, types);
-  updateBowler(bowling, runs + extras);
+  updateBowler(bowling, runs);
 
   if (state.selectedTypes.wicket) {
     batting.isOut = true;
@@ -102,7 +103,6 @@ function updateBall(state, originalRuns) {
     bowlerName,
     getOver(battingTeam.balls),
   );
-  st_mergeMatch(state);
 }
 
 function updateBattingTeam(battingTeam, runs, isBallCounted) {
@@ -111,6 +111,9 @@ function updateBattingTeam(battingTeam, runs, isBallCounted) {
 }
 
 function updateStriker(batting, runs) {
+  if (runs === 4) batting.fours++;
+  if (runs === 6) batting.sixers++;
+
   batting.runs += runs;
   batting.balls += 1;
   batting.strikeRate = parseInt((batting.runs / batting.balls) * 100);
@@ -120,6 +123,8 @@ function updateBowler(bowling, runs) {
   bowling.runs += runs;
   bowling.balls += 1;
   bowling.economyRate = (bowling.runs / getOverVal(bowling.balls)).toFixed(2);
+
+  bowling.currentOverRuns += runs;
 }
 
 function isBallCounted({wide, noBall}) {
@@ -167,30 +172,45 @@ export function handleMatchOver(state) {
 export function handleInningsChange(state) {
   state.inningsOverDialogVisible = true;
   state.needInningsChange = true;
+  state.needBowlerChange = false;
   state.innings++;
   state.validBalls = 0;
   swapTeams(state);
 }
 
-function handleOverChange(battingTeam, state) {
+function handleOverChange(state) {
+  const {battingTeam, bowlingTeam} = getTeams(state);
+  let {bowling} = getCurrentBowler(bowlingTeam);
+
+  if (bowling.currenOverRuns === 0) {
+    bowling.maidens++;
+  }
   swapBatsman(battingTeam);
+
   state.nextBowlerDialogVisible = true;
   state.needBowlerChange = true;
   state.validBalls = 0;
+  bowling.currenOverRuns = 0;
 }
 
-function finalize(state) {
+function finalize(state, runs) {
   const {battingTeam, bowlingTeam} = getTeams(state);
 
   const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
   const oneOverCompleted = state.validBalls >= 6;
   let chased = state.innings === 2 && battingTeam.runs > bowlingTeam.runs;
 
+  if (needBatsmenSwap(runs)) {
+    swapBatsman(battingTeam);
+  }
+
   if (chased) {
     handleMatchOver(state);
   } else if (allOversOver) {
     endInnings(state);
   } else if (oneOverCompleted) {
-    handleOverChange(battingTeam, state);
+    handleOverChange(state);
   }
 }
+
+const needBatsmenSwap = (runs) => runs % 2 !== 0;

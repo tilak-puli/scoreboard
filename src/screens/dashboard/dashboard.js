@@ -17,11 +17,6 @@ import MatchActions from './components/match-actions/match-actions-container';
 import MatchOverDialog from './components/match-over-dialog.js/match-over-dialog-container';
 
 const Dashboard = ({navigation}) => {
-  useBackButton(() => {
-    navigation.navigate('Home');
-    return true;
-  });
-
   return (
     <SafeAreaView style={CommonStyles.basicPage}>
       <ScoreboardMini />

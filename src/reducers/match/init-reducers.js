@@ -1,5 +1,3 @@
-import {st_createMatch} from './storage-reducers';
-
 const newPlayer = (name) => ({
   name,
   batting: {
@@ -12,7 +10,14 @@ const newPlayer = (name) => ({
     isOut: false,
     isRetired: false,
   },
-  bowling: {balls: 0, maidens: 0, runs: 0, wickets: 0, economyRate: 0},
+  bowling: {
+    balls: 0,
+    maidens: 0,
+    runs: 0,
+    wickets: 0,
+    economyRate: 0,
+    currenOverRuns: 0,
+  },
   fielding: {catches: 0, runOuts: 0, stumpings: 0},
 });
 
@@ -27,7 +32,6 @@ export const teamInitialState = (name) => ({
   strikerIndex: null,
   nonStrikerIndex: null,
   bowlerIndex: null,
-  needBowlerChange: false,
 });
 
 export const updateMatchBasicDetails = (state, {payload}) => {
@@ -46,10 +50,10 @@ export const updateMatchBasicDetails = (state, {payload}) => {
   }
   //show init players dialog
   state.initPlayersDialogVisible = true;
-  st_createMatch(state);
+  state.createdTime = new Date().getTime();
 };
 
-function updateBatsmans(battingTeam, striker, nonStriker, innings) {
+function updateBatsmen(battingTeam, striker, nonStriker, innings) {
   battingTeam.strikerIndex = getPlayerOrNewPlayerIndex(battingTeam, striker);
   battingTeam.nonStrikerIndex = getPlayerOrNewPlayerIndex(
     battingTeam,
@@ -68,7 +72,7 @@ export const updateInitPlayers = (state, {payload}) => {
   const {striker, nonStriker, bowler} = payload;
   const {battingTeam, bowlingTeam} = getTeams(state);
 
-  updateBatsmans(battingTeam, striker, nonStriker, state.innings);
+  updateBatsmen(battingTeam, striker, nonStriker, state.innings);
   bowlingTeam.bowlerIndex = getPlayerOrNewPlayerIndex(bowlingTeam, bowler);
 
   state.initPlayersDialogVisible = false;

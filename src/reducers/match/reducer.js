@@ -23,7 +23,6 @@ import {
   updateRunsInputDialogVisible,
   updateWicketDialogVisible,
 } from './dialog-reducers';
-import {st_createMatch} from './storage-reducers';
 
 export const getInitialState = () => ({
   team1: teamInitialState('team1'),
@@ -51,6 +50,8 @@ export const getInitialState = () => ({
   NextPlayerDialogVisible: false,
   inningsOverDialogVisible: false,
   initPlayersDialogVisible: false,
+
+  needBowlerChange: false,
 });
 
 export const matchSlice = createSlice({
@@ -73,7 +74,6 @@ export const matchSlice = createSlice({
 
     endInnings,
 
-    st_createMatch,
     setMatch,
 
     updateWicketDialogVisible,
