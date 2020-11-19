@@ -18,8 +18,11 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
     <Card>
       {getBatsmanHeader()}
       <View>
-        {getBatsmanRow(striker)}
+        {getBatsmanRow(striker, true)}
         {getBatsmanRow(nonStriker)}
+      </View>
+      <View style={TableStyles.tableRow}>
+        <Text />
       </View>
       {getBowlerHeader()}
       <View>{getBowlerRow(bowler)}</View>
@@ -27,10 +30,10 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
   );
 };
 
-export function getBatsmanRow({name, batting}) {
+export function getBatsmanRow({name = '', batting}, star) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text style={TableStyles.nameItem}>{name}</Text>
+      <Text style={TableStyles.nameItem}>{name + (star ? '*' : '')}</Text>
       <Text style={TableStyles.rowItem}>{batting.runs}</Text>
       <Text style={TableStyles.rowItem}>{batting.balls}</Text>
       <Text style={TableStyles.rowItem}>{batting.fours}</Text>

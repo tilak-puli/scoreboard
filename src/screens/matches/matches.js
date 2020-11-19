@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import _ from 'lodash';
 
 import CommonStyles from '../../stylesheet';
 import {allMatches} from '../../storage/store';
 import ScoreboardMini from '../dashboard/components/scoreboard-mini/scoreboard-mini';
-import {Button} from 'react-native-elements';
+import {Button, Card} from 'react-native-elements';
+import ScoreboardMiniRow from '../dashboard/components/scoreboard-mini/scoreboard-mini-row';
 
 const Matches = ({
   matches = [],
@@ -41,22 +43,38 @@ const Matches = ({
     );
   }
 
+  const sortedMatches = _.sortBy(matches, ['createdTime']).reverse();
+
   return (
-    <SafeAreaView style={CommonStyles.basicPage}>
-      {matches.map((m, i) => (
+    <ScrollView style={CommonStyles.basicPage}>
+      {sortedMatches.map((m, i) => (
         <Match key={i} match={m} setMatch={setMatch} navigation={navigation} />
       ))}
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const Match = ({match, setMatch, navigation}) => {
   return (
-    <ScoreboardMini
-      team1={match.team1}
-      team2={match.team2}
-      overs={match.overs}
-      actions={[
+    <Card>
+      <Text>
+        {new Date(match.createdTime).toLocaleString([], {
+          timeStyle: 'short',
+          dateStyle: 'short',
+          hour12: true,
+        })}
+      </Text>
+      <ScoreboardMiniRow
+        team={match.team1}
+        overs={match.overs}
+        isBatting={match.battingTeam === 'team1'}
+      />
+      <ScoreboardMiniRow
+        team={match.team2}
+        overs={match.overs}
+        isBatting={match.battingTeam === 'team2'}
+      />
+      <View style={CommonStyles.horizontalWithSpace}>
         <Button
           title={'Resume'}
           buttonStyle={{width: 150}}
@@ -65,7 +83,7 @@ const Match = ({match, setMatch, navigation}) => {
             setMatch(match);
             navigation.navigate('Dashboard');
           }}
-        />,
+        />
         <Button
           title={'Score Board'}
           buttonStyle={{width: 150}}
@@ -74,9 +92,9 @@ const Match = ({match, setMatch, navigation}) => {
             setMatch(match);
             navigation.navigate('Scoreboard');
           }}
-        />,
-      ]}
-    />
+        />
+      </View>
+    </Card>
   );
 };
 

@@ -5,13 +5,6 @@ import _ from 'lodash';
 import CommonStyles, {BallLogStyles} from '../../stylesheet';
 import {Card, Text} from 'react-native-elements';
 import {getTeams} from '../../reducers/match/init-reducers';
-import {
-  getBatsmanHeader,
-  getBatsmanRow,
-  getBowlerHeader,
-  getBowlerRow,
-} from '../dashboard/components/current-players/current-players';
-import BallType from '../dashboard/components/ball-type/ball-type-container';
 import {getTypeLetter} from '../dashboard/components/previous-balls/previous-balls';
 
 const Overs = ({match}) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 import _ from 'lodash';
 
-import CommonStyles from '../../stylesheet';
+import CommonStyles, {TableStyles} from '../../stylesheet';
 import {Card, Text} from 'react-native-elements';
 import {getTeams} from '../../reducers/match/init-reducers';
 import {
@@ -14,7 +14,7 @@ import {
 
 const Scoreboard = ({match}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
-  if (match.innings / 2 === 0) {
+  if (match.innings / 2 !== 0) {
     //if second or fourth innings
     battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
   }
@@ -39,19 +39,31 @@ const Scoreboard = ({match}) => {
 };
 
 const Innings = ({battingTeam, bowlingTeam, innings}) => {
-  const orderedBatsmans = _.sortBy(
-    battingTeam.players,
+  const batsmen = battingTeam.players.filter(
+    (p) => p.batting.balls > 0 || (p.batting.positions[innings - 1] ?? false),
+  );
+  const orderedBatsmen = _.sortBy(
+    batsmen,
     (p) => p.batting.positions[innings - 1],
   );
 
-  const validBowlers = bowlingTeam.players.filter((b) => b.bowling.balls > 0);
+  const validBowlers = bowlingTeam.players.filter(
+    (b) => b.bowling.over.over > 0 || b.bowling.over.balls > 0,
+  );
 
   return (
     <Card>
       <Text>Innings {innings}</Text>
       <View>
         {getBatsmanHeader()}
-        <View>{orderedBatsmans.map(getBatsmanRow)}</View>
+        <View>
+          {orderedBatsmen.map((b) =>
+            getBatsmanRow(b, !(b.batting.isOut || b.batting.isRetired)),
+          )}
+        </View>
+      </View>
+      <View style={TableStyles.tableRow}>
+        <Text />
       </View>
       <View>
         {getBowlerHeader()}

@@ -10,21 +10,31 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
   const [overs, updateTotalOvers] = useState(2);
   const [winTossTeam, updateWinTossTeam] = useState(1);
   const [selected, updatedSelected] = useState('batting');
-
+  const clearAndUpdate = () => {
+    updateMatchBasicDetails(team1Name, team2Name, overs, winTossTeam, selected);
+    updateTeam1Name('');
+    updateTeam2Name('');
+    updateTotalOvers(2);
+    updateWinTossTeam(1);
+    updatedSelected('batting');
+  };
   return (
     <SafeAreaView style={CommonStyles.page}>
       <Card title="Select Teams">
         <Input
           onChangeText={updateTeam1Name}
+          value={team1Name}
           label={'team1 Name'}
           placeholder="Enter Team1 Name"
         />
         <Input
           onChangeText={updateTeam2Name}
+          value={team2Name}
           label={'team2 Name'}
           placeholder="Enter Team 2 Name"
         />
         <Input
+          value={overs}
           label={'overs'}
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"
@@ -57,13 +67,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
         </View>
         <Button
           onPress={() => {
-            updateMatchBasicDetails(
-              team1Name,
-              team2Name,
-              overs,
-              winTossTeam,
-              selected,
-            );
+            clearAndUpdate();
             navigation.navigate('Dashboard');
           }}
           title="Start Match"

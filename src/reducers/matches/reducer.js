@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const updateMatches = (state, {payload}) => {
-  console.log(payload);
   state.data = payload.matches;
   state.loading = false;
 };
