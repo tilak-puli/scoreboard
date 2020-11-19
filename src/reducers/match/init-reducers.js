@@ -11,6 +11,9 @@ const newPlayer = (name) => ({
     strikeRate: 0,
     isOut: false,
     isRetired: false,
+    wicketCause: '',
+    wicketHelper: '',
+    wicketBowler: '',
   },
   bowling: {
     over: {over: 0, balls: 0},

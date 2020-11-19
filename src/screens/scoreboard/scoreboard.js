@@ -11,13 +11,10 @@ import {
   getBowlerHeader,
   getBowlerRow,
 } from '../dashboard/components/current-players/current-players';
+import {WICKET_TYPES} from '../../constants';
 
 const Scoreboard = ({match}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
-  if (match.innings / 2 !== 0) {
-    //if second or fourth innings
-    battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
-  }
   let totalInnings = _.max([match.innings, 1]);
 
   let inningsDivs = [];
@@ -42,35 +39,71 @@ const Innings = ({battingTeam, bowlingTeam, innings}) => {
   const batsmen = battingTeam.players.filter(
     (p) => p.batting.balls > 0 || (p.batting.positions[innings - 1] ?? false),
   );
-  const orderedBatsmen = _.sortBy(
-    batsmen,
-    (p) => p.batting.positions[innings - 1],
-  );
+  const batsmenRows = [];
 
-  const validBowlers = bowlingTeam.players.filter(
-    (b) => b.bowling.over.over > 0 || b.bowling.over.balls > 0,
-  );
+  orderBatsmen(batsmen, innings).forEach((b) => {
+    const isOut = b.batting.isOut || b.batting.isRetired;
+    batsmenRows.push(
+      <View
+        style={{padding: 5, borderBottomWidth: 1, borderBottomColor: '#DDD'}}>
+        {getBatsmanRow(b, !isOut)}
+        <OutMessage batsman={b} />
+      </View>,
+    );
+  });
 
   return (
     <Card>
       <Text>Innings {innings}</Text>
       <View>
         {getBatsmanHeader()}
-        <View>
-          {orderedBatsmen.map((b) =>
-            getBatsmanRow(b, !(b.batting.isOut || b.batting.isRetired)),
-          )}
-        </View>
+        <View style={{paddingLeft: 5}}>{batsmenRows}</View>
       </View>
       <View style={TableStyles.tableRow}>
         <Text />
       </View>
       <View>
         {getBowlerHeader()}
-        <View>{validBowlers.map(getBowlerRow)}</View>
+        <View style={{paddingLeft: 5}}>
+          {getValidBowlers(bowlingTeam.players).map(getBowlerRow)}
+        </View>
       </View>
     </Card>
   );
 };
+
+const OutMessage = ({batsman}) => {
+  const {wicketCause, wicketHelper, wicketBowler} = batsman.batting;
+  let message = '';
+  if (wicketCause === WICKET_TYPES.CATCH) {
+    message = 'c ' + wicketHelper + ' b ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.STUMP_OUT) {
+    message = 'st ' + wicketHelper + ' b ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.RUN_OUT) {
+    message = 'runout (' + wicketHelper + ' / ' + wicketBowler + ')';
+  } else if (wicketCause === WICKET_TYPES.HIT_WICKET) {
+    message = 'hit wicket ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.LBW) {
+    message = 'lbw ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.OTHER) {
+    message = 'other ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.BOWLED) {
+    message = 'b ' + wicketBowler;
+  } else {
+    message = 'not out';
+  }
+
+  return (
+    <View style={TableStyles.tableRow}>
+      <Text style={CommonStyles.greySmallText}>{message}</Text>
+    </View>
+  );
+};
+
+const orderBatsmen = (batsmen, innings) =>
+  _.sortBy(batsmen, (p) => p.batting.positions[innings - 1]);
+
+const getValidBowlers = (players) =>
+  players.filter((b) => b.bowling.over.over > 0 || b.bowling.over.balls > 0);
 
 export default Scoreboard;

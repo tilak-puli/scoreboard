@@ -91,6 +91,10 @@ function updateBall(state, originalRuns) {
 
   if (state.selectedTypes.wicket) {
     batting.isOut = true;
+    batting.wicketCause = state.selectedTypes.wicketType;
+    batting.wicketHelper = state.selectedTypes.wicketHelper;
+    batting.wicketBowler = bowlerName;
+    batting.isOut = true;
     battingTeam.wickets++;
     bowling.wickets++;
     state.wicketDialogVisible = true;

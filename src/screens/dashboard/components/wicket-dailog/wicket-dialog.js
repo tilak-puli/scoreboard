@@ -21,6 +21,7 @@ const WicketDialog = ({
   updateSelectedType,
 }) => {
   const [wicketType, updateWicketType] = useState(WICKET_TYPES.CATCH);
+  const [helper, updateHelper] = useState('');
   const [batsman, updateBatsman] = useState('');
   const [errorMessage, updateErrorMessage] = useState('');
 
@@ -32,6 +33,7 @@ const WicketDialog = ({
 
     updateErrorMessage('');
     updateSelectedType('wicketType', wicketType);
+    updateSelectedType('wicketHelper', helper);
     addBall();
     nextBatsman(batsman);
     cancel();
@@ -61,6 +63,14 @@ const WicketDialog = ({
           <Picker.Item label="Hit wicket" value={WICKET_TYPES.HIT_WICKET} />
           <Picker.Item label="Other" value={WICKET_TYPES.OTHER} />
         </Picker>
+        {helperMessages[wicketType] ? (
+          <Input
+            onChangeText={updateHelper}
+            label={helperMessages[wicketType]}
+          />
+        ) : (
+          ''
+        )}
         <Input
           onChangeText={updateBatsman}
           errorMessage={errorMessage}
@@ -73,6 +83,12 @@ const WicketDialog = ({
       </DialogFooter>
     </Dialog>
   );
+};
+
+const helperMessages = {
+  [WICKET_TYPES.CATCH]: 'Caught by',
+  [WICKET_TYPES.RUN_OUT]: 'Throw by',
+  [WICKET_TYPES.STUMP_OUT]: 'Stumped by',
 };
 
 export default WicketDialog;

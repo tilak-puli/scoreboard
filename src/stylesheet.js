@@ -57,6 +57,10 @@ const CommonStyles = StyleSheet.create({
     margin: 5,
     borderRightWidth: 1.5,
   },
+  greySmallText: {
+    fontSize: 15,
+    color: '#666',
+  },
 });
 
 export const RunsInputStyles = StyleSheet.create({
@@ -111,6 +115,9 @@ export const TableStyles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 5,
     borderBottomColor: 'lightgrey',
+    backgroundColor: 'rgba(221,114,0,0.22)',
+    paddingLeft: 5,
+    borderRadius: 1,
   },
   rowItemFade: {
     color: 'grey',
