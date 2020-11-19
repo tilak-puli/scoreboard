@@ -17,6 +17,11 @@ const Scoreboard = ({match}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
   let totalInnings = _.max([match.innings, 1]);
 
+  if (match.innings % 2 === 0) {
+    //if second or fourth innings
+    battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
+  }
+
   let inningsDivs = [];
 
   for (let i = 1; i <= totalInnings; i++) {
@@ -54,7 +59,9 @@ const Innings = ({battingTeam, bowlingTeam, innings}) => {
 
   return (
     <Card>
-      <Text>Innings {innings}</Text>
+      <Text style={{textAlign: 'center', marginBottom: 10}}>
+        Innings {innings}
+      </Text>
       <View>
         {getBatsmanHeader()}
         <View style={{paddingLeft: 5}}>{batsmenRows}</View>

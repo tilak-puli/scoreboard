@@ -113,10 +113,14 @@ export const TableStyles = StyleSheet.create({
   },
   headerRow: {
     borderBottomWidth: 1,
-    paddingBottom: 5,
     borderBottomColor: 'lightgrey',
-    backgroundColor: 'rgba(221,114,0,0.22)',
+
     paddingLeft: 5,
+    paddingBottom: 5,
+    paddingTop: 5,
+
+    backgroundColor: 'rgba(221,114,0,0.22)',
+
     borderRadius: 1,
   },
   rowItemFade: {
