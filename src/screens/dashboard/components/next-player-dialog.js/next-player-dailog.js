@@ -37,6 +37,7 @@ const NextPlayerDialog = ({
         <Input
           onChangeText={updatePlayerName}
           label={'Enter next ' + playerType}
+          value={playerName}
         />
       </DialogContent>
       <DialogFooter>

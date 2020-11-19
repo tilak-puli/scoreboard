@@ -5,11 +5,12 @@ import {
   getStriker,
   getTeams,
 } from './init-reducers';
-import {getOver, getOverVal} from '../../cricket-utils';
+import {getOverVal} from '../../cricket-utils';
 import {swapBatsman, swapTeams} from './actions-reducers';
 import {current} from '@reduxjs/toolkit';
 import {endInnings} from './match-reducers';
 import {st_mergeMatch} from './storage-reducers';
+import {OverUtils} from '../../models/OverUtils';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
@@ -84,9 +85,9 @@ function updateBall(state, originalRuns) {
     state.validBalls++;
   }
 
-  updateBattingTeam(battingTeam, runs + extras, ballCounted);
+  updateBattingTeam(battingTeam, runs + extras);
   updateStriker(batting, runs, types);
-  updateBowler(bowling, runs);
+  updateBowler(bowling, runs, types, state.validBalls);
 
   if (state.selectedTypes.wicket) {
     batting.isOut = true;
@@ -101,13 +102,13 @@ function updateBall(state, originalRuns) {
     state.selectedTypes,
     [name, NSName],
     bowlerName,
-    getOver(battingTeam.balls),
+    battingTeam.over,
   );
 }
 
-function updateBattingTeam(battingTeam, runs, isBallCounted) {
+function updateBattingTeam(battingTeam, runs) {
   battingTeam.runs += runs;
-  if (isBallCounted) battingTeam.balls++;
+  battingTeam.over = OverUtils.addBall(battingTeam.over);
 }
 
 function updateStriker(batting, runs) {
@@ -119,10 +120,15 @@ function updateStriker(batting, runs) {
   batting.strikeRate = parseInt((batting.runs / batting.balls) * 100);
 }
 
-function updateBowler(bowling, runs) {
+function updateBowler(bowling, runs, types, validBalls) {
   bowling.runs += runs;
-  bowling.balls += 1;
-  bowling.economyRate = (bowling.runs / getOverVal(bowling.balls)).toFixed(2);
+  if (types.wide || types.noBall) {
+    bowling.runs++;
+  }
+  bowling.over = OverUtils.addBall(bowling.over);
+  bowling.economyRate = (
+    bowling.runs / getOverVal(validBalls + bowling.over.over * 6)
+  ).toFixed(2);
 
   bowling.currentOverRuns += runs;
 }
@@ -155,7 +161,7 @@ export function handleMatchOver(state) {
     state.matchOverMessage = chasedMessage(
       battingTeam.name,
       bowlingTeam.runs,
-      getOver(battingTeam.balls),
+      battingTeam.over.toString(),
     );
   } else if (battingTeam.runs < bowlingTeam.runs) {
     state.matchWonBy = state.bowlingTeam;
@@ -182,26 +188,30 @@ function handleOverChange(state) {
   const {battingTeam, bowlingTeam} = getTeams(state);
   let {bowling} = getCurrentBowler(bowlingTeam);
 
-  if (bowling.currenOverRuns === 0) {
+  if (bowling.currentOverRuns === 0) {
     bowling.maidens++;
   }
   swapBatsman(battingTeam);
 
-  state.nextBowlerDialogVisible = true;
-  state.needBowlerChange = true;
+  bowling.over = OverUtils.nextOver(bowling.over);
+  battingTeam.over = OverUtils.nextOver(battingTeam.over);
   state.validBalls = 0;
-  bowling.currenOverRuns = 0;
+  bowling.currentOverRuns = 0;
 }
 
 function finalize(state, runs) {
   const {battingTeam, bowlingTeam} = getTeams(state);
 
-  const allOversOver = state.overs.toFixed(1) == getOver(battingTeam.balls);
   const oneOverCompleted = state.validBalls >= 6;
+  const allOversOver =
+    state.overs === battingTeam.over.over + (oneOverCompleted ? 1 : 0);
   let chased = state.innings === 2 && battingTeam.runs > bowlingTeam.runs;
 
   if (needBatsmenSwap(runs)) {
     swapBatsman(battingTeam);
+  }
+  if (oneOverCompleted) {
+    handleOverChange(state);
   }
 
   if (chased) {
@@ -209,7 +219,8 @@ function finalize(state, runs) {
   } else if (allOversOver) {
     endInnings(state);
   } else if (oneOverCompleted) {
-    handleOverChange(state);
+    state.nextBowlerDialogVisible = true;
+    state.needBowlerChange = true;
   }
 }
 

@@ -1,3 +1,5 @@
+import Over from '../../models/OverUtils';
+
 const newPlayer = (name) => ({
   name,
   batting: {
@@ -11,12 +13,12 @@ const newPlayer = (name) => ({
     isRetired: false,
   },
   bowling: {
-    balls: 0,
+    over: {over: 0, balls: 0},
     maidens: 0,
     runs: 0,
     wickets: 0,
     economyRate: 0,
-    currenOverRuns: 0,
+    currentOverRuns: 0,
   },
   fielding: {catches: 0, runOuts: 0, stumpings: 0},
 });
@@ -32,6 +34,7 @@ export const teamInitialState = (name) => ({
   strikerIndex: null,
   nonStrikerIndex: null,
   bowlerIndex: null,
+  over: {over: 0, balls: 0},
 });
 
 export const updateMatchBasicDetails = (state, {payload}) => {

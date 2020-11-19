@@ -2,7 +2,7 @@ import {Card, Text} from 'react-native-elements';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TableStyles} from '../../../../stylesheet';
-import {getOver} from '../../../../cricket-utils';
+import {OverUtils} from '../../../../models/OverUtils';
 
 const CurrentPlayers = ({striker, nonStriker, bowler}) => {
   if (!striker || !nonStriker || !bowler) {
@@ -43,7 +43,9 @@ export function getBowlerRow({name, bowling}) {
   return (
     <View style={TableStyles.tableRow}>
       <Text style={TableStyles.nameItem}>{name}</Text>
-      <Text style={TableStyles.rowItem}>{getOver(bowling.balls)}</Text>
+      <Text style={TableStyles.rowItem}>
+        {OverUtils.toString(bowling.over)}
+      </Text>
       <Text style={TableStyles.rowItem}>{bowling.maidens}</Text>
       <Text style={TableStyles.rowItem}>{bowling.runs}</Text>
       <Text style={TableStyles.rowItem}>{bowling.wickets}</Text>

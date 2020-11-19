@@ -12,6 +12,7 @@ import {
   getBowlerRow,
 } from '../dashboard/components/current-players/current-players';
 import BallType from '../dashboard/components/ball-type/ball-type-container';
+import {getTypeLetter} from '../dashboard/components/previous-balls/previous-balls';
 
 const Overs = ({match}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
@@ -35,7 +36,7 @@ const Overs = ({match}) => {
 };
 
 const Innings = ({ballsLog, innings}) => {
-  let groupedBalls = _.groupBy(ballsLog, (ball) => parseInt(ball.over) + 1);
+  let groupedBalls = _.groupBy(ballsLog, (ball) => ball.over.over);
 
   return (
     <Card>
@@ -88,18 +89,22 @@ const BallsTitle = ({balls}) => {
   );
 };
 
-const Ball = ({ball}) => (
-  <View
-    style={{
-      ...BallLogStyles.ballContainer,
-      width: 25,
-      height: 25,
-    }}>
-    <Text style={{...BallLogStyles.ballText, fontSize: 10}}>
-      {ball.runs + ball.extras}
-    </Text>
-  </View>
-);
+const Ball = ({ball}) => {
+  const typeLetter = getTypeLetter(ball.types);
+  let ballText = ball.runs + ball.extras;
+  if (typeLetter) ballText = ball.runs + ball.extras + '' + typeLetter;
+
+  return (
+    <View
+      style={{
+        ...BallLogStyles.ballContainer,
+        width: 25,
+        height: 25,
+      }}>
+      <Text style={{...BallLogStyles.ballText, fontSize: 10}}>{ballText}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   over: {

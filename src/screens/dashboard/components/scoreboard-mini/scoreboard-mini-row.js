@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import CommonStyles from '../../../../stylesheet';
-import {getOver} from '../../../../cricket-utils';
+import {OverUtils} from '../../../../models/OverUtils';
 
 const ScoreboardMiniRow = ({team, overs, isBatting}) => {
   return (
@@ -16,7 +16,7 @@ const ScoreboardMiniRow = ({team, overs, isBatting}) => {
           {team.runs}/{team.wickets}{' '}
         </Text>
         <Text style={isBatting ? CommonStyles.selectedRowText : {}}>
-          ({getOver(team.balls)}/{overs})
+          ({OverUtils.toString(team.over)}/{overs})
         </Text>
       </View>
     </View>

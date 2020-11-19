@@ -29,7 +29,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"
         />
-        <View style={CommonStyles.horizontal}>
+        <View style={{...CommonStyles.horizontal, marginBottom: 5}}>
           <Text style={CommonStyles.horizontalLabel}>Toss won by:</Text>
           <Button
             type={winTossTeam === 1 ? 'solid' : 'clear'}
@@ -42,7 +42,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
             title="Team 2"
           />
         </View>
-        <View style={CommonStyles.horizontal}>
+        <View style={{...CommonStyles.horizontal, marginBottom: 5}}>
           <Text style={CommonStyles.horizontalLabel}>Selected:</Text>
           <Button
             type={selected === 'batting' ? 'solid' : 'clear'}

@@ -15,6 +15,12 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   const [striker, updateStriker] = useState('');
   const [nonStriker, updateNonStriker] = useState('');
   const [bowler, updateBowler] = useState('');
+  const clearAndUpdate = () => {
+    updateInitPlayers(striker, nonStriker, bowler);
+    updateBowler('');
+    updateNonStriker('');
+    updateStriker('');
+  };
 
   return (
     <Dialog
@@ -30,24 +36,24 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
         <Input
           onChangeText={updateStriker}
           label={'Striker Name'}
+          value={striker}
           placeholder="Enter Striker Name"
         />
         <Input
           onChangeText={updateNonStriker}
           label={'Non Striker Name'}
+          value={nonStriker}
           placeholder="Enter Non Striker Name"
         />
         <Input
           onChangeText={updateBowler}
           label={'Bowler Name'}
+          value={bowler}
           placeholder="Enter Bowler Name"
         />
       </DialogContent>
       <DialogFooter>
-        <DialogButton
-          onPress={() => updateInitPlayers(striker, nonStriker, bowler)}
-          text="Start Match"
-        />
+        <DialogButton onPress={clearAndUpdate} text="Start Match" />
       </DialogFooter>
     </Dialog>
   );
