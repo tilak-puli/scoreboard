@@ -18,10 +18,23 @@ const NextPlayerDialog = ({
   onContinue,
 }) => {
   const [playerName, updatePlayerName] = useState('');
+  const [errorMessage, updateErrorMessage] = useState('');
   const clearAndHide = () => {
     updatePlayerName('');
     hide();
   };
+
+  const submit = () => {
+    if (!playerName.trim()) {
+      updateErrorMessage('Please enter player name');
+      return;
+    }
+
+    updateErrorMessage('');
+    onContinue(playerName.trim());
+    clearAndHide();
+  };
+
   return (
     <Dialog
       width={Dimensions.get('window').width * 0.9}
@@ -38,17 +51,12 @@ const NextPlayerDialog = ({
           onChangeText={updatePlayerName}
           label={'Enter next ' + playerType}
           value={playerName}
+          errorMessage={errorMessage}
         />
       </DialogContent>
       <DialogFooter>
         <DialogButton onPress={clearAndHide} text="Cancel" />
-        <DialogButton
-          onPress={() => {
-            onContinue(playerName);
-            clearAndHide();
-          }}
-          text="Continue"
-        />
+        <DialogButton onPress={submit} text="Continue" />
       </DialogFooter>
     </Dialog>
   );

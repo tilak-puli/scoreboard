@@ -22,6 +22,21 @@ const WicketDialog = ({
 }) => {
   const [wicketType, updateWicketType] = useState(WICKET_TYPES.CATCH);
   const [batsman, updateBatsman] = useState('');
+  const [errorMessage, updateErrorMessage] = useState('');
+
+  const submit = () => {
+    if (!batsman.trim()) {
+      updateErrorMessage('Please enter player name');
+      return;
+    }
+
+    updateErrorMessage('');
+    updateSelectedType('wicketType', wicketType);
+    addBall();
+    nextBatsman(batsman);
+    cancel();
+  };
+
   return (
     <Dialog
       dialogTitle={<DialogTitle title="wooh OUT!! How did that happen?" />}
@@ -46,19 +61,15 @@ const WicketDialog = ({
           <Picker.Item label="Hit wicket" value={WICKET_TYPES.HIT_WICKET} />
           <Picker.Item label="Other" value={WICKET_TYPES.OTHER} />
         </Picker>
-        <Input onChangeText={updateBatsman} label={'Enter next batsman name'} />
+        <Input
+          onChangeText={updateBatsman}
+          errorMessage={errorMessage}
+          label={'Enter next batsman name'}
+        />
       </DialogContent>
       <DialogFooter>
         <DialogButton onPress={cancel} text="Cancel" />
-        <DialogButton
-          onPress={() => {
-            updateSelectedType('wicketType', wicketType);
-            addBall();
-            nextBatsman(batsman);
-            cancel();
-          }}
-          text="Let's continue"
-        />
+        <DialogButton onPress={submit} text="Let's continue" />
       </DialogFooter>
     </Dialog>
   );

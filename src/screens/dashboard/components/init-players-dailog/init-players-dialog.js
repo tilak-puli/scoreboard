@@ -16,7 +16,7 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   const [nonStriker, updateNonStriker] = useState('');
   const [bowler, updateBowler] = useState('');
   const clearAndUpdate = () => {
-    updateInitPlayers(striker, nonStriker, bowler);
+    updateInitPlayers(striker.trim(), nonStriker.trim(), bowler.trim());
     updateBowler('');
     updateNonStriker('');
     updateStriker('');

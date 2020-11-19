@@ -11,7 +11,13 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
   const [winTossTeam, updateWinTossTeam] = useState(1);
   const [selected, updatedSelected] = useState('batting');
   const clearAndUpdate = () => {
-    updateMatchBasicDetails(team1Name, team2Name, overs, winTossTeam, selected);
+    updateMatchBasicDetails(
+      team1Name.trim(),
+      team2Name.trim(),
+      overs,
+      winTossTeam,
+      selected,
+    );
     updateTeam1Name('');
     updateTeam2Name('');
     updateTotalOvers(2);
@@ -36,6 +42,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
         <Input
           value={overs}
           label={'overs'}
+          keyboardType={'numeric'}
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"
         />
