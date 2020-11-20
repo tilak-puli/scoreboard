@@ -10,4 +10,9 @@ export const OverUtils = {
     over: over.over + 1,
     balls: 0,
   }),
+
+  concat: (over1 = {}, over2 = {}) => ({
+    over: over1.over + over1.over,
+    balls: over1.balls + over1.balls,
+  }),
 };

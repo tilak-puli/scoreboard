@@ -31,6 +31,14 @@ export const mergeMatch = async (matchId, match) => {
   }
 };
 
+export const deleteMatch = async (matchId) => {
+  try {
+    await AsyncStorage.removeItem(matchId);
+  } catch (error) {
+    // Error retrieving data
+  }
+};
+
 export const allMatches = async () => {
   try {
     const matches = await AsyncStorage.multiGet(
