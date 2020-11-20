@@ -11,7 +11,7 @@ import {
 import {Picker} from 'native-base';
 import {WICKET_TYPES} from '../../../../constants';
 import {Input} from 'react-native-elements';
-import {Dimensions} from 'react-native';
+import {Dimensions, View} from 'react-native';
 
 const WicketDialog = ({
   isVisible,
@@ -69,7 +69,7 @@ const WicketDialog = ({
             label={helperMessages[wicketType]}
           />
         ) : (
-          ''
+          <View />
         )}
         <Input
           onChangeText={updateBatsman}

@@ -4,7 +4,6 @@ import _ from 'lodash';
 
 import CommonStyles from '../../stylesheet';
 import {allMatches} from '../../storage/store';
-import ScoreboardMini from '../dashboard/components/scoreboard-mini/scoreboard-mini';
 import {Button, Card} from 'react-native-elements';
 import ScoreboardMiniRow from '../dashboard/components/scoreboard-mini/scoreboard-mini-row';
 
@@ -27,18 +26,16 @@ const Matches = ({
     return clearMatches;
   }, []);
 
-  if (matches.length === 0) {
-    return (
-      <SafeAreaView style={CommonStyles.basicPage}>
-        <Text>No matches found. Create new match to see history here.</Text>
-      </SafeAreaView>
-    );
-  }
-
   if (loading) {
     return (
-      <SafeAreaView style={CommonStyles.basicPage}>
+      <SafeAreaView style={CommonStyles.centerPage}>
         <Text>loading matches, please wait.</Text>
+      </SafeAreaView>
+    );
+  } else if (matches.length === 0) {
+    return (
+      <SafeAreaView style={CommonStyles.centerPage}>
+        <Text>No matches found. Create new match to see history here.</Text>
       </SafeAreaView>
     );
   }
@@ -57,23 +54,31 @@ const Matches = ({
 const Match = ({match, setMatch, navigation}) => {
   return (
     <Card>
-      <Text>
+      <Text style={{fontSize: 12}}>
         {new Date(match.createdTime).toLocaleString([], {
           timeStyle: 'short',
           dateStyle: 'short',
           hour12: true,
         })}
       </Text>
-      <ScoreboardMiniRow
-        team={match.team1}
-        overs={match.overs}
-        isBatting={match.battingTeam === 'team1'}
-      />
-      <ScoreboardMiniRow
-        team={match.team2}
-        overs={match.overs}
-        isBatting={match.battingTeam === 'team2'}
-      />
+      <View
+        style={{
+          borderBottomWidth: 1,
+          paddingBottom: 10,
+          borderBottomColor: '#AAA',
+        }}>
+        <ScoreboardMiniRow
+          team={match.team1}
+          overs={match.overs}
+          isBatting={true}
+        />
+        <ScoreboardMiniRow
+          team={match.team2}
+          overs={match.overs}
+          isBatting={true}
+        />
+        <MatchStatus match={match} />
+      </View>
       <View style={CommonStyles.horizontalWithSpace}>
         <Button
           title={'Resume'}
@@ -96,6 +101,23 @@ const Match = ({match, setMatch, navigation}) => {
       </View>
     </Card>
   );
+};
+
+const MatchStatus = ({match}) => {
+  if (match.matchOver) {
+    return (
+      <Text style={CommonStyles.greySmallText}>{match.matchOverMessage}</Text>
+    );
+  } else {
+    return (
+      <Text style={CommonStyles.greySmallText}>
+        {'Toss won by ' +
+          match['team' + match.tossWonByTeam].name +
+          ' and elected to ' +
+          match.selected}
+      </Text>
+    );
+  }
 };
 
 export default Matches;

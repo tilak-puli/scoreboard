@@ -1,20 +1,25 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from './screens/home/home-container';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import TeamNames from './screens/team-names/team-names-container';
 import Dashboard from './screens/dashboard/dashboard-container';
 import Scoreboard from './screens/scoreboard/scoreboard-container';
 import Matches from './screens/matches/matches-container';
 import Overs from './screens/overs/overs-container';
+import {Icon} from 'react-native-elements';
+
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        component={Home}
+        component={BottomNavigator}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -45,5 +50,31 @@ const RootNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+const BottomNavigator = () => (
+  <Tab.Navigator
+    activeColor="#e91e63"
+    labelStyle={{fontSize: 12}}
+    style={{backgroundColor: 'tomato'}}>
+    <Tab.Screen
+      name={'New'}
+      component={TeamNames}
+      options={{
+        tabBarIcon: ({color}) => (
+          <Icon name="add" type="material" color={color} size={26} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name={'old'}
+      component={Matches}
+      options={{
+        tabBarIcon: ({color}) => (
+          <Icon name="assignment" type="material" color={color} size={26} />
+        ),
+      }}
+    />
+  </Tab.Navigator>
+);
 
 export default RootNavigator;

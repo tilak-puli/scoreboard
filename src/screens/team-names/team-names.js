@@ -30,18 +30,18 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
         <Input
           onChangeText={updateTeam1Name}
           value={team1Name}
-          label={'team1 Name'}
+          label={'Team 1'}
           placeholder="Enter Team1 Name"
         />
         <Input
           onChangeText={updateTeam2Name}
           value={team2Name}
-          label={'team2 Name'}
+          label={'Team 2'}
           placeholder="Enter Team 2 Name"
         />
         <Input
           value={overs}
-          label={'overs'}
+          label={'Overs'}
           keyboardType={'numeric'}
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"

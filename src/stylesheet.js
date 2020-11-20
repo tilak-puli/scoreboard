@@ -10,6 +10,12 @@ const CommonStyles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  centerPage: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   dialog: {
     width: '90%',
   },
