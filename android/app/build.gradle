@@ -132,8 +132,8 @@ android {
         applicationId "com.colossal_dreams.scoreboard"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 16
-        versionName "1.7"
+        versionCode 18
+        versionName "1.7.6"
     }
     signingConfigs {
         release {

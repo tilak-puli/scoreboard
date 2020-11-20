@@ -29,7 +29,11 @@ const RunsInputDialog = ({isVisible, hide, addRuns}) => {
         })
       }>
       <DialogContent>
-        <Input onChangeText={updateRuns} label={'Enter runs'} />
+        <Input
+          onChangeText={updateRuns}
+          keyboardType={'numeric'}
+          label={'Enter runs'}
+        />
       </DialogContent>
       <DialogFooter>
         <DialogButton onPress={clearAndHide} text="Cancel" />

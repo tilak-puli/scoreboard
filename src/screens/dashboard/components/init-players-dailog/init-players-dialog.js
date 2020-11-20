@@ -15,7 +15,35 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   const [striker, updateStriker] = useState('');
   const [nonStriker, updateNonStriker] = useState('');
   const [bowler, updateBowler] = useState('');
+  const [SER, updateSER] = useState('');
+  const [NSER, updateNSER] = useState('');
+  const [BER, updateBER] = useState('');
+
   const clearAndUpdate = () => {
+    let error = false;
+    if (striker.trim().length === 0) {
+      updateSER('Please enter striker name');
+      error = true;
+    } else {
+      updateSER('');
+    }
+    if (nonStriker.trim().length === 0) {
+      updateNSER('Please enter non striker name');
+      error = true;
+    } else {
+      updateNSER('');
+    }
+    if (bowler.trim().length === 0) {
+      updateBER('Please enter bowler name');
+      error = true;
+    } else {
+      updateBER('');
+    }
+
+    if (error) {
+      return;
+    }
+
     updateInitPlayers(striker.trim(), nonStriker.trim(), bowler.trim());
     updateBowler('');
     updateNonStriker('');
@@ -38,17 +66,20 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
           label={'Striker Name'}
           value={striker}
           placeholder="Enter Striker Name"
+          errorMessage={SER}
         />
         <Input
           onChangeText={updateNonStriker}
           label={'Non Striker Name'}
           value={nonStriker}
+          errorMessage={NSER}
           placeholder="Enter Non Striker Name"
         />
         <Input
           onChangeText={updateBowler}
           label={'Bowler Name'}
           value={bowler}
+          errorMessage={BER}
           placeholder="Enter Bowler Name"
         />
       </DialogContent>

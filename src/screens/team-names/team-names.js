@@ -7,10 +7,38 @@ import CommonStyles from '../../stylesheet';
 const TeamNames = ({updateMatchBasicDetails, navigation}) => {
   const [team1Name, updateTeam1Name] = useState('');
   const [team2Name, updateTeam2Name] = useState('');
-  const [overs, updateTotalOvers] = useState(2);
+  const [overs, updateTotalOvers] = useState(0);
   const [winTossTeam, updateWinTossTeam] = useState(1);
   const [selected, updatedSelected] = useState('batting');
-  const clearAndUpdate = () => {
+
+  const [t1NameER, updateT1NameER] = useState('');
+  const [t2NameER, updateT2NameER] = useState('');
+  const [oversER, updateOversER] = useState('');
+
+  const submit = () => {
+    let error = false;
+    if (team1Name.trim().length === 0) {
+      updateT1NameER('Please enter team1 name');
+      error = true;
+    } else {
+      updateT1NameER('');
+    }
+    if (team2Name.trim().length === 0) {
+      updateT2NameER('Please enter team2 name');
+      error = true;
+    } else {
+      updateT2NameER('');
+    }
+    if (overs < 1) {
+      updateOversER('Please enter over more than 1');
+      error = true;
+    } else {
+      updateOversER('');
+    }
+    if (error) {
+      return;
+    }
+
     updateMatchBasicDetails(
       team1Name.trim(),
       team2Name.trim(),
@@ -18,11 +46,14 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
       winTossTeam,
       selected,
     );
+
     updateTeam1Name('');
     updateTeam2Name('');
     updateTotalOvers(2);
     updateWinTossTeam(1);
     updatedSelected('batting');
+
+    navigation.navigate('Dashboard');
   };
   return (
     <SafeAreaView style={CommonStyles.page}>
@@ -31,17 +62,20 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
           onChangeText={updateTeam1Name}
           value={team1Name}
           label={'Team 1'}
+          errorMessage={t1NameER}
           placeholder="Enter Team1 Name"
         />
         <Input
           onChangeText={updateTeam2Name}
           value={team2Name}
+          errorMessage={t2NameER}
           label={'Team 2'}
           placeholder="Enter Team 2 Name"
         />
         <Input
           value={overs}
           label={'Overs'}
+          errorMessage={oversER}
           keyboardType={'numeric'}
           onChangeText={(o) => updateTotalOvers(+o)}
           placeholder="Overs"
@@ -72,13 +106,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
             title="Bowling"
           />
         </View>
-        <Button
-          onPress={() => {
-            clearAndUpdate();
-            navigation.navigate('Dashboard');
-          }}
-          title="Start Match"
-        />
+        <Button onPress={submit} title="Start Match" />
       </Card>
     </SafeAreaView>
   );
