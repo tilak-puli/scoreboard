@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import _ from 'lodash';
 
@@ -13,9 +13,13 @@ import {
 } from '../dashboard/components/current-players/current-players';
 import {WICKET_TYPES} from '../../constants';
 
-const Scoreboard = ({match}) => {
+const Scoreboard = ({match, updateMatches}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
   let totalInnings = _.max([match.innings, 1]);
+
+  useEffect(() => {
+    return () => updateMatches();
+  }, []);
 
   if (match.innings % 2 === 0) {
     //if second or fourth innings
@@ -79,26 +83,29 @@ const Innings = ({battingTeam, bowlingTeam, innings}) => {
   );
 };
 
+export function getOutMessage(wicketCause, wicketHelper, wicketBowler) {
+  if (wicketCause === WICKET_TYPES.CATCH) {
+    return 'c ' + wicketHelper + ' b ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.STUMP_OUT) {
+    return 'st ' + wicketHelper + ' b ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.RUN_OUT) {
+    return 'runout (' + wicketHelper + ' / ' + wicketBowler + ')';
+  } else if (wicketCause === WICKET_TYPES.HIT_WICKET) {
+    return 'hit wicket ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.LBW) {
+    return 'lbw ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.OTHER) {
+    return 'other ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.BOWLED) {
+    return 'b ' + wicketBowler;
+  } else {
+    return 'not out';
+  }
+}
+
 const OutMessage = ({batsman}) => {
   const {wicketCause, wicketHelper, wicketBowler} = batsman.batting;
-  let message = '';
-  if (wicketCause === WICKET_TYPES.CATCH) {
-    message = 'c ' + wicketHelper + ' b ' + wicketBowler;
-  } else if (wicketCause === WICKET_TYPES.STUMP_OUT) {
-    message = 'st ' + wicketHelper + ' b ' + wicketBowler;
-  } else if (wicketCause === WICKET_TYPES.RUN_OUT) {
-    message = 'runout (' + wicketHelper + ' / ' + wicketBowler + ')';
-  } else if (wicketCause === WICKET_TYPES.HIT_WICKET) {
-    message = 'hit wicket ' + wicketBowler;
-  } else if (wicketCause === WICKET_TYPES.LBW) {
-    message = 'lbw ' + wicketBowler;
-  } else if (wicketCause === WICKET_TYPES.OTHER) {
-    message = 'other ' + wicketBowler;
-  } else if (wicketCause === WICKET_TYPES.BOWLED) {
-    message = 'b ' + wicketBowler;
-  } else {
-    message = 'not out';
-  }
+  let message = getOutMessage(wicketCause, wicketHelper, wicketBowler);
 
   return (
     <View style={TableStyles.tableRow}>

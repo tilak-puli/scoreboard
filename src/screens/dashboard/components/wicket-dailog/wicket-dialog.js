@@ -52,6 +52,7 @@ const WicketDialog = ({
       <DialogContent>
         <Picker
           mode={'dropdown'}
+          selectedValue={wicketType}
           onValueChange={updateWicketType}
           label={'Wicket Type'}
           placeholder="Select wicket type">

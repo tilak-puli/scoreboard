@@ -28,6 +28,9 @@ const CommonStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  flex1: {
+    flex: 1,
+  },
   basicMargin: {
     margin: 5,
   },

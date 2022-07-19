@@ -1,4 +1,5 @@
 import {
+  EXTRAS_TYPES,
   getCurrentBowler,
   getInitialTypes,
   getNonStriker,
@@ -11,20 +12,25 @@ import {current} from '@reduxjs/toolkit';
 import {endInnings} from './match-reducers';
 import {st_mergeMatch} from './storage-reducers';
 import {OverUtils} from '../../models/OverUtils';
+import {getOutMessage} from '../../screens/scoreboard/scoreboard';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
   let runs = 0;
+  let extraType = null;
+
   if (types.wide || types.noBall) {
     extras++;
+    extraType = types.wide ? EXTRAS_TYPES.wide : EXTRAS_TYPES.noBall;
   }
   if (types.byes || types.legByes) {
     extras += originalRuns;
+    extraType = EXTRAS_TYPES.byes;
   } else {
     runs += originalRuns;
   }
 
-  return {extras, runs};
+  return {extras, runs, extraType};
 }
 
 export const addBall = (state, {payload}) => {
@@ -69,6 +75,10 @@ const logBall = (
   battingTeam.ballsLog.push({runs, extras, types, batsmen, bowler, over});
 };
 
+function getRunRate(runs, over, validBalls) {
+  return runs / (over + validBalls / 6);
+}
+
 function updateBall(state, originalRuns) {
   logState(state);
 
@@ -78,23 +88,31 @@ function updateBall(state, originalRuns) {
   const {name: NSName} = getNonStriker(battingTeam);
   const types = state.selectedTypes;
 
-  const {extras, runs} = categorizeRuns(types, originalRuns);
+  const {extras, runs, extraType} = categorizeRuns(types, originalRuns);
   const ballCounted = isBallCounted(types);
 
   if (ballCounted) {
     state.validBalls++;
   }
 
-  updateBattingTeam(battingTeam, runs + extras);
+  updateBattingTeam(battingTeam, runs, extras, extraType);
+  battingTeam.runRate = getRunRate(
+    battingTeam.runs,
+    battingTeam.over.over,
+    state.validBalls,
+  );
+
   updateStriker(batting, runs, types);
   updateBowler(bowling, runs, types, state.validBalls);
 
   if (state.selectedTypes.wicket) {
     batting.isOut = true;
     batting.wicketCause = state.selectedTypes.wicketType;
+    batting.wicketMessage = getOutMessage(state.selectedTypes.wicketType);
     batting.wicketHelper = state.selectedTypes.wicketHelper;
     batting.wicketBowler = bowlerName;
     batting.isOut = true;
+    batting.outBall = bowlingTeam.over.over + '.' + bowlingTeam.over.balls;
     battingTeam.wickets++;
     bowling.wickets++;
     state.wicketDialogVisible = true;
@@ -110,9 +128,13 @@ function updateBall(state, originalRuns) {
   );
 }
 
-function updateBattingTeam(battingTeam, runs) {
-  battingTeam.runs += runs;
+function updateBattingTeam(battingTeam, runs, extras, extrasType) {
+  battingTeam.runs += runs + extras;
   battingTeam.over = OverUtils.addBall(battingTeam.over);
+
+  if (extras) {
+    battingTeam.extras[extrasType] += extras;
+  }
 }
 
 function updateStriker(batting, runs) {

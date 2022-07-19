@@ -45,7 +45,7 @@ export const allMatches = async () => {
       await AsyncStorage.getAllKeys(),
     );
     if (matches !== null) {
-      return matches.map((m) => JSON.parse(m[1]));
+      return matches?.map((m) => JSON.parse(m[1]));
     }
   } catch (error) {
     // Error retrieving data

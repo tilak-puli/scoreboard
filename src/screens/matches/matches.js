@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import _ from 'lodash';
+import {useIsFocused} from '@react-navigation/native';
 
 import CommonStyles from '../../stylesheet';
 import {allMatches} from '../../storage/store';
 import {Button, Card, Icon} from 'react-native-elements';
 import ScoreboardMiniRow from '../dashboard/components/scoreboard-mini/scoreboard-mini-row';
+import {downloadJson} from '../../utils';
 
 const Matches = ({
   matches = [],
@@ -18,6 +20,8 @@ const Matches = ({
   clearMatches,
   setMatch,
 }) => {
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     loadingMatches(true);
     const fetchMatches = async () => {
@@ -25,7 +29,7 @@ const Matches = ({
     };
     fetchMatches();
     return clearMatches;
-  }, []);
+  }, [isFocused]);
 
   if (loading) {
     return (
@@ -107,7 +111,6 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
   <View style={CommonStyles.horizontalWithSpace}>
     <Button
       title={'Resume'}
-      buttonStyle={{width: 150}}
       type={'clear'}
       onPress={() => {
         setMatch(match);
@@ -115,8 +118,8 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       }}
     />
     <Button
+      style={CommonStyles.flex1}
       title={'Score Board'}
-      buttonStyle={{width: 150}}
       type={'clear'}
       onPress={() => {
         setMatch(match);
@@ -124,8 +127,22 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       }}
     />
     <Icon
+      name="share"
+      type="material"
+      style={{width: 130}}
+      color={'#aaaaaa'}
+      size={26}
+      onPress={() =>
+        downloadJson(
+          match,
+          `${match.team1.name}_vs_${match.team2.name}_${match.createdTime}`,
+        )
+      }
+    />
+    <Icon
       name="delete"
       type="material"
+      style={{width: 130}}
       color={'#aaaaaa'}
       size={26}
       onPress={deleteMatch.bind(null, match.createdTime)}

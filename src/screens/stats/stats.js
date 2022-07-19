@@ -6,6 +6,8 @@ import CommonStyles from '../../stylesheet';
 import {allMatches} from '../../storage/store';
 import MostRuns from './components/most-runs';
 import {OverUtils} from '../../models/OverUtils';
+import {downloadJson} from "../../utils";
+
 
 const Stats = ({
   matches,
@@ -63,6 +65,10 @@ const Stats = ({
             players: getTopWicketTakers(allPlayers),
           })
         }
+      />
+      <Item
+        name={'Export data'}
+        onClick={function(){downloadJson(matches)}}
       />
     </View>
   );

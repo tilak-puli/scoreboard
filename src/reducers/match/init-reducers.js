@@ -10,9 +10,11 @@ const newPlayer = (name) => ({
     positions: [],
     strikeRate: 0,
     isOut: false,
+    outBall: '',
     isRetired: false,
     wicketCause: '',
     wicketHelper: '',
+    wicketMessage: '',
     wicketBowler: '',
   },
   bowling: {
@@ -26,12 +28,15 @@ const newPlayer = (name) => ({
   fielding: {catches: 0, runOuts: 0, stumpings: 0},
 });
 
+export const EXTRAS_TYPES = {wide: 'wide', noBall: 'noBall', byes: 'byes'};
+
 export const teamInitialState = (name) => ({
   name,
   runs: 0,
+  runRate: 0,
   wickets: 0,
   retiredCounts: 0,
-  balls: 0,
+  extras: {wide: 0, noBall: 0, byes: 0},
   ballsLog: [],
   players: [],
   strikerIndex: null,
