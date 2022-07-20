@@ -3,6 +3,7 @@ import {
   getCurrentBowler,
   getInitialTypes,
   getNonStriker,
+  getPlayerOrNewPlayerIndex,
   getStriker,
   getTeams,
 } from './init-reducers';
@@ -80,6 +81,30 @@ export function getRunRate(runs, over, validBalls) {
   return (runs / (over + validBalls / 6 || 1)).toFixed(2) || 0.0;
 }
 
+function addFieldingData(state) {
+  if (!state.selectedTypes?.wicketHelper) {
+    return;
+  }
+
+  const {battingTeam} = getTeams(state);
+  const playerIndex = getPlayerOrNewPlayerIndex(
+    battingTeam,
+    state.selectedTypes.wicketHelper,
+  );
+  const fielder = battingTeam.players[playerIndex];
+  switch (state.selectedTypes?.wicketType) {
+    case WICKET_TYPES.STUMP_OUT:
+      fielder.fielding.stumpings++;
+      break;
+    case WICKET_TYPES.RUN_OUT:
+      fielder.fielding.runOuts++;
+      break;
+    case WICKET_TYPES.CATCH:
+      fielder.fielding.catches++;
+      break;
+  }
+}
+
 function updateBall(state, originalRuns) {
   logState(state);
 
@@ -108,22 +133,39 @@ function updateBall(state, originalRuns) {
 
   if (state.selectedTypes.wicket) {
     let outBatting = batting;
+    let outBatter = name;
 
     if (state.selectedTypes.wicketType === WICKET_TYPES.RUN_OUT) {
-      outBatting =
-        state.selectedTypes.outBatsman === NSName ? NSbatting : batting;
+      if (state.selectedTypes.outBatsman === NSName) {
+        outBatting = NSbatting;
+        outBatter = NSName;
+      }
     } else {
       bowling.wickets++;
     }
 
     outBatting.isOut = true;
     outBatting.wicketCause = state.selectedTypes.wicketType;
-    outBatting.wicketMessage = getOutMessage(state.selectedTypes.wicketType);
+    outBatting.wicketMessage = getOutMessage(
+      state.selectedTypes.wicketType,
+      state.selectedTypes.wicketHelper,
+      bowlerName,
+    );
     outBatting.wicketHelper = state.selectedTypes.wicketHelper;
     outBatting.wicketBowler = bowlerName;
     outBatting.isOut = true;
     outBatting.outBall = bowlingTeam.over.over + '.' + bowlingTeam.over.balls;
     battingTeam.wickets++;
+
+    addFieldingData(state);
+
+    battingTeam.fallOfWickets.push({
+      name: outBatter,
+      runs: battingTeam.runs,
+      over: OverUtils.toString(battingTeam.over),
+      bowler: bowlerName,
+    });
+
     state.wicketDialogVisible = true;
   }
   logBall(

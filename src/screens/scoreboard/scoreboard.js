@@ -156,8 +156,7 @@ export function getOutMessage(wicketCause, wicketHelper, wicketBowler) {
 }
 
 const OutMessage = ({batsman}) => {
-  const {wicketCause, wicketHelper, wicketBowler} = batsman.batting;
-  let message = getOutMessage(wicketCause, wicketHelper, wicketBowler);
+  const {wicketMessage} = batsman.batting;
 
   return (
     <View>
@@ -167,7 +166,7 @@ const OutMessage = ({batsman}) => {
           paddingLeft: 5,
           paddingBottom: 2,
         }}>
-        {message}
+        {wicketMessage}
       </Text>
     </View>
   );
