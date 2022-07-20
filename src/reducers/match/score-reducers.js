@@ -75,8 +75,8 @@ const logBall = (
   battingTeam.ballsLog.push({runs, extras, types, batsmen, bowler, over});
 };
 
-function getRunRate(runs, over, validBalls) {
-  return runs / (over + validBalls / 6);
+export function getRunRate(runs, over, validBalls) {
+  return (runs / (over + validBalls / 6 || 1)).toFixed(2) || 0.0;
 }
 
 function updateBall(state, originalRuns) {
@@ -250,4 +250,4 @@ function finalize(state, runs) {
   }
 }
 
-const needBatsmenSwap = (runs) => runs % 2 !== 0;
+const needBatsmenSwap = runs => runs % 2 !== 0;

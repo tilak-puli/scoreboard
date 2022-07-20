@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import _ from 'lodash';
 
 import CommonStyles, {TableStyles} from '../../stylesheet';
@@ -12,6 +12,8 @@ import {
   getBowlerRow,
 } from '../dashboard/components/current-players/current-players';
 import {WICKET_TYPES} from '../../constants';
+import {OverUtils} from '../../models/OverUtils';
+import {getRunRate} from '../../reducers/match/score-reducers';
 
 const Scoreboard = ({match, updateMatches}) => {
   let {battingTeam, bowlingTeam} = getTeams(match);
@@ -39,22 +41,34 @@ const Scoreboard = ({match, updateMatches}) => {
     );
     battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
   }
-  return (
-    <SafeAreaView style={CommonStyles.basicPage}>{inningsDivs}</SafeAreaView>
-  );
+  return <ScrollView style={CommonStyles.basicPage}>{inningsDivs}</ScrollView>;
 };
+
+function getExtrasText(extras) {
+  const all = Object.values(extras)?.reduce((a, b) => a + b);
+  return `${all} ${extras.byes} B, ${extras.wide} WD, ${extras.noBall} NB`;
+}
+
+function getTotalText(battingTeam) {
+  return `${battingTeam.runs} - ${battingTeam.wickets} (${OverUtils.toString(
+    battingTeam.over,
+  )}) ${getRunRate(
+    battingTeam.runs,
+    battingTeam.over.over,
+    battingTeam.over.balls,
+  )}`;
+}
 
 const Innings = ({battingTeam, bowlingTeam, innings}) => {
   const batsmen = battingTeam.players.filter(
-    (p) => p.batting.balls > 0 || (p.batting.positions[innings - 1] ?? false),
+    p => p.batting.balls > 0 || (p.batting.positions[innings - 1] ?? false),
   );
   const batsmenRows = [];
 
-  orderBatsmen(batsmen, innings).forEach((b) => {
+  orderBatsmen(batsmen, innings).forEach(b => {
     const isOut = b.batting.isOut || b.batting.isRetired;
     batsmenRows.push(
-      <View
-        style={{padding: 5, borderBottomWidth: 1, borderBottomColor: '#DDD'}}>
+      <View style={{borderBottomWidth: 1, borderBottomColor: '#DDD'}}>
         {getBatsmanRow(b, !isOut)}
         <OutMessage batsman={b} />
       </View>,
@@ -63,20 +77,58 @@ const Innings = ({battingTeam, bowlingTeam, innings}) => {
 
   return (
     <Card>
-      <Text style={{textAlign: 'center', marginBottom: 10}}>
-        Innings {innings}
-      </Text>
+      <View style={{...CommonStyles.horizontalWithSpace, marginBottom: 10}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginBottom: 10,
+            ...CommonStyles.mediumText,
+          }}>
+          {battingTeam.name}
+        </Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginBottom: 10,
+            ...CommonStyles.mediumText,
+          }}>
+          {battingTeam.runs} - {battingTeam.wickets} (
+          {OverUtils.toString(battingTeam.over)})
+        </Text>
+      </View>
       <View>
         {getBatsmanHeader()}
-        <View style={{paddingLeft: 5}}>{batsmenRows}</View>
+        <View>{batsmenRows}</View>
+        <View
+          style={{
+            ...TableStyles.tableRow,
+            borderBottomWidth: 1,
+            padding: 5,
+            borderBottomColor: '#DDD',
+          }}>
+          <Text>Extras</Text>
+          <Text>{getExtrasText(bowlingTeam.extras)}</Text>
+        </View>
+        <View
+          style={{
+            ...TableStyles.tableRow,
+            padding: 5,
+            borderBottomWidth: 1,
+            borderBottomColor: '#DDD',
+          }}>
+          <Text>Total</Text>
+          <Text>{getTotalText(battingTeam)}</Text>
+        </View>
       </View>
       <View style={TableStyles.tableRow}>
         <Text />
       </View>
       <View>
         {getBowlerHeader()}
-        <View style={{paddingLeft: 5}}>
-          {getValidBowlers(bowlingTeam.players).map(getBowlerRow)}
+        <View>
+          {getValidBowlers(bowlingTeam.players).map(b => (
+            <View style={{padding: 5}}>{getBowlerRow(b)}</View>
+          ))}
         </View>
       </View>
     </Card>
@@ -108,16 +160,23 @@ const OutMessage = ({batsman}) => {
   let message = getOutMessage(wicketCause, wicketHelper, wicketBowler);
 
   return (
-    <View style={TableStyles.tableRow}>
-      <Text style={CommonStyles.greySmallText}>{message}</Text>
+    <View>
+      <Text
+        style={{
+          ...CommonStyles.greySmallText,
+          paddingLeft: 5,
+          paddingBottom: 2,
+        }}>
+        {message}
+      </Text>
     </View>
   );
 };
 
 const orderBatsmen = (batsmen, innings) =>
-  _.sortBy(batsmen, (p) => p.batting.positions[innings - 1]);
+  _.sortBy(batsmen, p => p.batting.positions[innings - 1]);
 
-const getValidBowlers = (players) =>
-  players.filter((b) => b.bowling.over.over > 0 || b.bowling.over.balls > 0);
+const getValidBowlers = players =>
+  players.filter(b => b.bowling.over.over > 0 || b.bowling.over.balls > 0);
 
 export default Scoreboard;

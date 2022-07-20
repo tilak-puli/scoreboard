@@ -11,6 +11,7 @@ const Home = ({navigation, createNewMatch}) => {
         <Button
           title="New Match"
           buttonStyle={CommonStyles.basicMargin}
+          titleStyle={{color: '#153e75'}}
           onPress={() => {
             navigation.navigate('TeamSelector');
             createNewMatch();

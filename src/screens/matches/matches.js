@@ -90,19 +90,22 @@ const Status = ({match}) => (
   <View
     style={{
       borderBottomWidth: 1,
-      paddingBottom: 10,
+      paddingTop: 10,
+      paddingBottom: 5,
       borderBottomColor: '#AAA',
     }}>
-    <ScoreboardMiniRow
-      team={match.team1}
-      overs={match.overs}
-      isBatting={true}
-    />
-    <ScoreboardMiniRow
-      team={match.team2}
-      overs={match.overs}
-      isBatting={true}
-    />
+    <View style={{paddingBottom: 10}}>
+      <ScoreboardMiniRow
+        team={match.team1}
+        overs={match.overs}
+        isBatting={true}
+      />
+      <ScoreboardMiniRow
+        team={match.team2}
+        overs={match.overs}
+        isBatting={true}
+      />
+    </View>
     <StatusMessage match={match} />
   </View>
 );
@@ -112,6 +115,8 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
     <Button
       title={'Resume'}
       type={'clear'}
+      buttonStyle={{backgroundColor: 'transparent'}}
+      titleStyle={{color: 'rgba(0,0,0,0.61)'}}
       onPress={() => {
         setMatch(match);
         navigation.navigate('Dashboard');
@@ -120,7 +125,8 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
     <Button
       style={CommonStyles.flex1}
       title={'Score Board'}
-      type={'clear'}
+      buttonStyle={{backgroundColor: 'transparent'}}
+      titleStyle={{color: 'rgba(0,0,0,0.61)'}}
       onPress={() => {
         setMatch(match);
         navigation.navigate('Scoreboard');
@@ -130,7 +136,7 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       name="share"
       type="material"
       style={{width: 130}}
-      color={'#aaaaaa'}
+      color={'rgba(0,0,0,0.61)'}
       size={26}
       onPress={() =>
         downloadJson(
@@ -143,7 +149,7 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       name="delete"
       type="material"
       style={{width: 130}}
-      color={'#aaaaaa'}
+      color={'rgba(0,0,0,0.61)'}
       size={26}
       onPress={deleteMatch.bind(null, match.createdTime)}
     />

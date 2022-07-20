@@ -21,9 +21,6 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
         {getBatsmanRow(striker, true)}
         {getBatsmanRow(nonStriker)}
       </View>
-      <View style={TableStyles.tableRow}>
-        <Text />
-      </View>
       {getBowlerHeader()}
       <View>{getBowlerRow(bowler)}</View>
     </Card>
@@ -52,7 +49,9 @@ export function getBowlerRow({name, bowling}) {
       <Text style={TableStyles.rowItem}>{bowling.maidens}</Text>
       <Text style={TableStyles.rowItem}>{bowling.runs}</Text>
       <Text style={TableStyles.rowItem}>{bowling.wickets}</Text>
-      <Text style={TableStyles.rowItem}>{bowling.economyRate}</Text>
+      <Text style={{...TableStyles.rowItem, width: 50}}>
+        {bowling.economyRate}
+      </Text>
     </View>
   );
 }
@@ -89,7 +88,7 @@ export const getBowlerHeader = () => (
     <Text style={TableStyles.rowItemFade}>M</Text>
     <Text style={TableStyles.rowItemFade}>R</Text>
     <Text style={TableStyles.rowItemFade}>W</Text>
-    <Text style={TableStyles.rowItemFade}>ER</Text>
+    <Text style={{...TableStyles.rowItemFade, width: 50}}>ER</Text>
   </View>
 );
 

@@ -24,26 +24,31 @@ const BallType = ({selectedTypes, updateSelectedType}) => {
       <Button
         type={wide ? 'solid' : 'outline'}
         onPress={toggleWide}
+        titleStyle={{color: '#153e75'}}
         title="Wide"
       />
       <Button
         type={noBall ? 'solid' : 'outline'}
         onPress={toggleNoBall}
         title="No Ball"
+        titleStyle={{color: '#153e75'}}
       />
       <Button
         type={byes ? 'solid' : 'outline'}
         onPress={toggleByes}
+        titleStyle={{color: '#153e75'}}
         title="Byes"
       />
       <Button
         type={legByes ? 'solid' : 'outline'}
         onPress={toggleLegByes}
+        titleStyle={{color: '#153e75'}}
         title="Leg Byes"
       />
       <Button
         type={wicket ? 'solid' : 'outline'}
         onPress={toggleWicket}
+        titleStyle={{color: '#153e75'}}
         title="Wicket"
       />
     </Card>

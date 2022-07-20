@@ -77,19 +77,25 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
           label={'Overs'}
           errorMessage={oversER}
           keyboardType={'numeric'}
-          onChangeText={(o) => updateTotalOvers(+o)}
+          onChangeText={o => updateTotalOvers(+o)}
           placeholder="Overs"
         />
         <View style={{...CommonStyles.horizontal, marginBottom: 5}}>
           <Text style={CommonStyles.horizontalLabel}>Toss won by:</Text>
           <Button
             type={winTossTeam === 1 ? 'solid' : 'clear'}
+            buttonStyle={{
+              backgroundColor: winTossTeam === 1 ? '#2a69ac' : 'transparent',
+            }}
             onPress={() => updateWinTossTeam(1)}
             title="Team 1"
           />
           <Button
             type={winTossTeam === 2 ? 'solid' : 'clear'}
             onPress={() => updateWinTossTeam(2)}
+            buttonStyle={{
+              backgroundColor: winTossTeam === 2 ? '#2a69ac' : 'transparent',
+            }}
             title="Team 2"
           />
         </View>
@@ -97,16 +103,30 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
           <Text style={CommonStyles.horizontalLabel}>Selected:</Text>
           <Button
             type={selected === 'batting' ? 'solid' : 'clear'}
+            buttonStyle={{
+              backgroundColor:
+                selected === 'batting' ? '#2a69ac' : 'transparent',
+            }}
             onPress={() => updatedSelected('batting')}
             title="Batting"
           />
           <Button
             type={selected === 'bowling' ? 'solid' : 'clear'}
+            buttonStyle={{
+              backgroundColor:
+                selected === 'bowling' ? '#2a69ac' : 'transparent',
+            }}
             onPress={() => updatedSelected('bowling')}
             title="Bowling"
           />
         </View>
-        <Button onPress={submit} title="Start Match" />
+        <Button
+          onPress={submit}
+          title="Start Match"
+          buttonStyle={{
+            backgroundColor: '#2a69ac',
+          }}
+        />
       </Card>
     </SafeAreaView>
   );

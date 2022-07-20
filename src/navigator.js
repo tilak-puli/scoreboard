@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import TeamNames from './screens/team-names/team-names-container';
 import Dashboard from './screens/dashboard/dashboard-container';
@@ -14,7 +14,7 @@ import MostRuns from './screens/stats/components/most-runs';
 import MostWickets from './screens/stats/components/most-wickets';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const RootNavigator = () => {
   return (
@@ -70,9 +70,10 @@ const RootNavigator = () => {
 
 const BottomNavigator = () => (
   <Tab.Navigator
-    activeColor="#e91e63"
+    activeColor="white"
+    shifting={true}
     labelStyle={{fontSize: 12}}
-    style={{backgroundColor: 'tomato'}}>
+    barStyle={{backgroundColor: '#153e75'}}>
     <Tab.Screen
       name={'New'}
       component={TeamNames}
@@ -83,7 +84,7 @@ const BottomNavigator = () => (
       }}
     />
     <Tab.Screen
-      name={'old'}
+      name={'Old'}
       component={Matches}
       options={{
         tabBarIcon: ({color}) => (
@@ -92,7 +93,7 @@ const BottomNavigator = () => (
       }}
     />
     <Tab.Screen
-      name={'stats'}
+      name={'Stats'}
       component={Stats}
       options={{
         tabBarIcon: ({color}) => (

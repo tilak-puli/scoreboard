@@ -23,6 +23,10 @@ const CommonStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  textBottom: {
+    alignItems: 'flex-end',
+    textAlignVertical: 'bottom',
+  },
   horizontalWithSpace: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -70,15 +74,23 @@ const CommonStyles = StyleSheet.create({
     fontSize: 15,
     color: '#666',
   },
+  bigText: {
+    fontSize: 40,
+  },
+  mediumText: {
+    fontSize: 20,
+  },
 });
 
 export const RunsInputStyles = StyleSheet.create({
   runBtn: {
-    width: 40,
+    width: 45,
     margin: 5,
-    borderRadius: 20,
+    borderRadius: 28,
+    borderColor: '#153e75',
+    borderWidth: 1.3,
   },
-  runBtnText: {fontSize: 18},
+  runBtnText: {fontSize: 18, color: '#153e75'},
   innerCard: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -119,27 +131,30 @@ export const TableStyles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: 3,
+    paddingBottom: 3,
   },
   headerRow: {
     borderBottomWidth: 1,
     borderBottomColor: 'lightgrey',
+    backgroundColor: 'rgba(20,47,84,0.82)',
 
-    paddingLeft: 5,
-    paddingBottom: 5,
-    paddingTop: 5,
-
-    backgroundColor: 'rgba(221,114,0,0.22)',
-
+    padding: 5,
     borderRadius: 1,
   },
   rowItemFade: {
-    color: 'grey',
+    color: 'white',
+    padding: 5,
     width: 40,
   },
   nameItem: {
     width: 90,
+    padding: 3,
+    paddingBottom: 1,
   },
   rowItem: {
+    padding: 3,
+
     width: 40,
   },
 });

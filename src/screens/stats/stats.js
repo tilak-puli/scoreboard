@@ -4,10 +4,8 @@ import _ from 'lodash';
 
 import CommonStyles from '../../stylesheet';
 import {allMatches} from '../../storage/store';
-import MostRuns from './components/most-runs';
 import {OverUtils} from '../../models/OverUtils';
-import {downloadJson} from "../../utils";
-
+import {downloadJson} from '../../utils';
 
 const Stats = ({
   matches,
@@ -68,7 +66,9 @@ const Stats = ({
       />
       <Item
         name={'Export data'}
-        onClick={function(){downloadJson(matches)}}
+        onClick={function () {
+          downloadJson(matches);
+        }}
       />
     </View>
   );
@@ -88,26 +88,26 @@ const Item = ({name, onClick}) => (
   </TouchableOpacity>
 );
 
-const getTopScorers = (players) =>
-  _.sortBy(players, (p) => p.batting.runs)
+const getTopScorers = players =>
+  _.sortBy(players, p => p.batting.runs)
     .reverse()
     .splice(0, 10);
 
-const getTopWicketTakers = (players) =>
-  _.sortBy(players, (p) => p.bowling.wickets)
+const getTopWicketTakers = players =>
+  _.sortBy(players, p => p.bowling.wickets)
     .reverse()
     .splice(0, 10);
 
-const getAllPlayers = (matches) =>
+const getAllPlayers = matches =>
   _.flattenDeep(
-    matches.map((m) => [
+    matches?.map(m => [
       _.cloneDeep(m.team1.players),
       _.cloneDeep(m.team2.players),
     ]),
   ).reduce(mergePlayers, []);
 
 const mergePlayers = (players, p) => {
-  const matchedIndx = players.findIndex((pl) => pl.name === p.name);
+  const matchedIndx = players.findIndex(pl => pl.name === p.name);
 
   if (matchedIndx !== -1) {
     const player = players[matchedIndx];
