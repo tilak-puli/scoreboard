@@ -4,7 +4,7 @@ import {Button, Card, Input} from 'react-native-elements';
 import {Text} from 'native-base';
 import CommonStyles from '../../stylesheet';
 
-const TeamNames = ({updateMatchBasicDetails, navigation}) => {
+const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
   const [team1Name, updateTeam1Name] = useState('');
   const [team2Name, updateTeam2Name] = useState('');
   const [overs, updateTotalOvers] = useState(0);
@@ -39,6 +39,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
       return;
     }
 
+    createNewMatch();
     updateMatchBasicDetails(
       team1Name.trim(),
       team2Name.trim(),

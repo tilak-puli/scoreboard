@@ -1,13 +1,19 @@
 import {
   getNonStriker,
   getPlayerOrNewPlayerIndex,
-  getStriker,
   getTeams,
 } from './init-reducers';
 import {handleInningsChange, handleMatchOver} from './score-reducers';
 import {getInitialState} from './reducer';
+import {st_mergeMatch} from './storage-reducers';
 
-export const createNewMatch = () => getInitialState();
+export const createNewMatch = state => {
+  if (state.overs > 0) {
+    st_mergeMatch(state);
+  }
+
+  return getInitialState();
+};
 
 //handle out player name coming again
 export const nextBatsman = (state, {payload}) => {
