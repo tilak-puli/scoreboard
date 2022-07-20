@@ -49,7 +49,7 @@ const Matches = ({
 
   return (
     <ScrollView style={CommonStyles.basicPage}>
-      {sortedMatches.map((m, i) => (
+      {sortedMatches?.map((m, i) => (
         <Match
           key={i}
           match={m}
@@ -141,7 +141,7 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       onPress={() =>
         downloadJson(
           match,
-          `${match.team1.name}_vs_${match.team2.name}_${match.createdTime}`,
+          `${match.team1.name}_vs_${match.team2.name}_${Date.now()}`,
         )
       }
     />

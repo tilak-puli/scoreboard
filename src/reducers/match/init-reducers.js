@@ -1,6 +1,6 @@
 import Over from '../../models/OverUtils';
 
-const newPlayer = (name) => ({
+const newPlayer = name => ({
   name,
   batting: {
     runs: 0,
@@ -30,7 +30,7 @@ const newPlayer = (name) => ({
 
 export const EXTRAS_TYPES = {wide: 'wide', noBall: 'noBall', byes: 'byes'};
 
-export const teamInitialState = (name) => ({
+export const teamInitialState = name => ({
   name,
   runs: 0,
   runRate: 0,
@@ -43,6 +43,7 @@ export const teamInitialState = (name) => ({
   nonStrikerIndex: null,
   bowlerIndex: null,
   over: {over: 0, balls: 0},
+  fallOfWickets: [],
 });
 
 export const updateMatchBasicDetails = (state, {payload}) => {
@@ -98,29 +99,31 @@ export const getInitialTypes = () => ({
   legByes: false,
   wicket: false,
   wicketType: null,
+  wicketHelper: null,
+  outBatsman: null,
 });
 
 //getters
-export const getTeams = (state) => {
+export const getTeams = state => {
   const battingTeam = state[state.battingTeam];
   const bowlingTeam = state[state.bowlingTeam];
   return {battingTeam, bowlingTeam};
 };
 
-export const getStriker = (team) => {
+export const getStriker = team => {
   return team.players[team.strikerIndex];
 };
 
-export const getNonStriker = (team) => {
+export const getNonStriker = team => {
   return team.players[team.nonStrikerIndex];
 };
 
-export const getCurrentBowler = (team) => {
+export const getCurrentBowler = team => {
   return team.players[team.bowlerIndex];
 };
 
 export const getPlayerOrNewPlayerIndex = (team, name) => {
-  let index = team.players.findIndex((player) => player.name === name);
+  let index = team.players.findIndex(player => player.name === name);
   if (index === -1) {
     team.players.push(newPlayer(name));
     index = team.players.length - 1;

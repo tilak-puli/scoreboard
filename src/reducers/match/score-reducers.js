@@ -13,6 +13,7 @@ import {endInnings} from './match-reducers';
 import {st_mergeMatch} from './storage-reducers';
 import {OverUtils} from '../../models/OverUtils';
 import {getOutMessage} from '../../screens/scoreboard/scoreboard';
+import {WICKET_TYPES} from '../../constants';
 
 function categorizeRuns(types, originalRuns) {
   let extras = 0;
@@ -85,7 +86,7 @@ function updateBall(state, originalRuns) {
   const {battingTeam, bowlingTeam} = getTeams(state);
   const {bowling, name: bowlerName} = getCurrentBowler(bowlingTeam);
   const {batting, name} = getStriker(battingTeam);
-  const {name: NSName} = getNonStriker(battingTeam);
+  const {batting: NSbatting, name: NSName} = getNonStriker(battingTeam);
   const types = state.selectedTypes;
 
   const {extras, runs, extraType} = categorizeRuns(types, originalRuns);
@@ -106,15 +107,23 @@ function updateBall(state, originalRuns) {
   updateBowler(bowling, runs, types, state.validBalls);
 
   if (state.selectedTypes.wicket) {
-    batting.isOut = true;
-    batting.wicketCause = state.selectedTypes.wicketType;
-    batting.wicketMessage = getOutMessage(state.selectedTypes.wicketType);
-    batting.wicketHelper = state.selectedTypes.wicketHelper;
-    batting.wicketBowler = bowlerName;
-    batting.isOut = true;
-    batting.outBall = bowlingTeam.over.over + '.' + bowlingTeam.over.balls;
+    let outBatting = batting;
+
+    if (state.selectedTypes.wicketType === WICKET_TYPES.RUN_OUT) {
+      outBatting =
+        state.selectedTypes.outBatsman === NSName ? NSbatting : batting;
+    } else {
+      bowling.wickets++;
+    }
+
+    outBatting.isOut = true;
+    outBatting.wicketCause = state.selectedTypes.wicketType;
+    outBatting.wicketMessage = getOutMessage(state.selectedTypes.wicketType);
+    outBatting.wicketHelper = state.selectedTypes.wicketHelper;
+    outBatting.wicketBowler = bowlerName;
+    outBatting.isOut = true;
+    outBatting.outBall = bowlingTeam.over.over + '.' + bowlingTeam.over.balls;
     battingTeam.wickets++;
-    bowling.wickets++;
     state.wicketDialogVisible = true;
   }
   logBall(

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import _ from 'lodash';
 
 import CommonStyles from '../../stylesheet';
@@ -27,7 +27,11 @@ const Stats = ({
   }, []);
 
   if (loading) {
-    return <Text style={CommonStyles.centerPage}>Calculating stats....</Text>;
+    return (
+      <SafeAreaView style={CommonStyles.centerPage}>
+        <Text style={CommonStyles.centerPage}>Calculating stats....</Text>
+      </SafeAreaView>
+    );
   }
 
   const allPlayers = getAllPlayers(matches);

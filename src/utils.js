@@ -8,7 +8,7 @@ export const downloadJson = (data, name = 'scoredboard') => {
   // const csv = jsonToCSV(data);
 
   RNFetchBlob.fs
-    .writeFile(pathToWrite, JSON.stringify(data), 'utf8')
+    .writeFile(pathToWrite, JSON.stringify(data, undefined, 2), 'utf8')
     .then(() => {
       console.log(`wrote file ${pathToWrite}`);
 
@@ -19,5 +19,5 @@ export const downloadJson = (data, name = 'scoredboard') => {
         type: 'success',
       });
     })
-    .catch((error) => console.error(error));
+    .catch(error => console.error(error));
 };

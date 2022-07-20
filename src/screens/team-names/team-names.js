@@ -73,7 +73,7 @@ const TeamNames = ({updateMatchBasicDetails, navigation}) => {
           placeholder="Enter Team 2 Name"
         />
         <Input
-          value={overs}
+          value={'' + overs}
           label={'Overs'}
           errorMessage={oversER}
           keyboardType={'numeric'}

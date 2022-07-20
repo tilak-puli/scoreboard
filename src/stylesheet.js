@@ -80,6 +80,12 @@ const CommonStyles = StyleSheet.create({
   mediumText: {
     fontSize: 20,
   },
+  label: {
+    fontSize: 16,
+    color: '#86939e',
+    fontWeight: 'bold',
+    paddingLeft: 5,
+  },
 });
 
 export const RunsInputStyles = StyleSheet.create({
