@@ -189,8 +189,12 @@ function updateBattingTeam(battingTeam, runs, extras, extrasType) {
 }
 
 function updateStriker(batting, runs) {
-  if (runs === 4) batting.fours++;
-  if (runs === 6) batting.sixers++;
+  if (runs === 4) {
+    batting.fours++;
+  }
+  if (runs === 6) {
+    batting.sixers++;
+  }
 
   batting.runs += runs;
   batting.balls += 1;
@@ -211,23 +215,34 @@ function updateBowler(bowling, runs, types, validBalls) {
 }
 
 function isBallCounted({wide, noBall}) {
-  if (wide || noBall) return false;
+  if (wide || noBall) {
+    return false;
+  }
 
   return true;
 }
 
 function logState(state) {
-  if (state.prevStates.length >= 10) state.prevStates.shift();
+  if (state.prevStates.length >= 10) {
+    state.prevStates.shift();
+  }
   const {prevStates, ...rest} = current(state);
   state.prevStates.push(rest);
 }
 
 function chasedMessage(name, runs, overs) {
-  return name + ' chased down ' + runs + ' in ' + overs + ' overs';
+  return name + ' chased down ' + runs + ' runs in ' + overs + ' overs.';
 }
 
-function defendedMessage(name, runs) {
-  return name + ' successfully defended ' + runs;
+function defendedMessage(name, runsNeeded) {
+  if (runsNeeded < 5) {
+    return `Tight match!! ${name} won by just ${runsNeeded} runs`;
+  }
+  return name + ' won by ' + runsNeeded + ' runs.';
+}
+
+function drawMessage() {
+  return "Oh Wow, It's a draw. Time for super over now.!!";
 }
 
 export function handleMatchOver(state) {
@@ -244,8 +259,11 @@ export function handleMatchOver(state) {
     state.matchWonBy = bowlingTeam.name;
     state.matchOverMessage = defendedMessage(
       bowlingTeam.name,
-      bowlingTeam.runs,
+      bowlingTeam.runs - battingTeam.runs,
     );
+  } else {
+    state.matchWonBy = 'DRAW';
+    state.matchOverMessage = drawMessage();
   }
 
   state.matchOver = true;

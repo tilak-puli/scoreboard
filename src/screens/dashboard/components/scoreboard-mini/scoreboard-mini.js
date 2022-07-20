@@ -88,8 +88,8 @@ const ScoreboardMini = ({
         <View>
           <Text>
             {battingTeamData.name} needs{' '}
-            {bowlingTeamData.runs - battingTeamData.runs} in{' '}
-            {overLeft.over * 6 + overLeft.balls}
+            {bowlingTeamData.runs - battingTeamData.runs} runs in{' '}
+            {overLeft.over * 6 + overLeft.balls} balls
           </Text>
         </View>
       )}
