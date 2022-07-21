@@ -144,6 +144,8 @@ export function getOutMessage(wicketCause, wicketHelper, wicketBowler) {
     return 'runout (' + wicketHelper + ' / ' + wicketBowler + ')';
   } else if (wicketCause === WICKET_TYPES.HIT_WICKET) {
     return 'hit wicket ' + wicketBowler;
+  } else if (wicketCause === WICKET_TYPES.HIT_SIX) {
+    return 'hit six ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.LBW) {
     return 'lbw ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.OTHER) {

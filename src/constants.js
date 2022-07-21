@@ -6,4 +6,5 @@ export const WICKET_TYPES = {
   STUMP_OUT: 'STUMP_OUT',
   HIT_WICKET: 'HIT_WICKET',
   OTHER: 'OTHER',
+  HIT_SIX: 'HIT_SIX',
 };

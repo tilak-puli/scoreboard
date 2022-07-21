@@ -70,6 +70,7 @@ const WicketDialog = ({
             <Picker.Item label="LBW" value={WICKET_TYPES.LBW} />
             <Picker.Item label="Stump out" value={WICKET_TYPES.STUMP_OUT} />
             <Picker.Item label="Hit wicket" value={WICKET_TYPES.HIT_WICKET} />
+            <Picker.Item label="Hit Six" value={WICKET_TYPES.HIT_SIX} />
             <Picker.Item label="Other" value={WICKET_TYPES.OTHER} />
           </Picker>
         </View>
