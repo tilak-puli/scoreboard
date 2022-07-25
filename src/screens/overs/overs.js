@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import _ from 'lodash';
 
 import CommonStyles, {BallLogStyles} from '../../stylesheet';
@@ -29,7 +29,7 @@ const Overs = ({match}) => {
 };
 
 const Innings = ({ballsLog, innings}) => {
-  let groupedBalls = _.groupBy(ballsLog, (ball) => ball.over.over);
+  let groupedBalls = _.groupBy(ballsLog, ball => ball.over.over);
 
   return (
     <Card>
@@ -65,7 +65,7 @@ const Balls = ({balls}) => (
   <View style={styles.ballsContainer}>
     <BallsTitle balls={balls} />
     <View style={styles.balls}>
-      {balls.map((ball) => (
+      {balls.map(ball => (
         <Ball ball={ball} />
       ))}
     </View>
@@ -73,8 +73,8 @@ const Balls = ({balls}) => (
 );
 
 const BallsTitle = ({balls}) => {
-  const batsmen = _.uniq(_.flatten(balls.map((b) => b.batsmen))).join(' & ');
-  const bowler = _.uniq(balls.map((b) => b.bowler)).join(' & ');
+  const batsmen = _.uniq(_.flatten(balls.map(b => b.batsmen))).join(' & ');
+  const bowler = _.uniq(balls.map(b => b.bowler)).join(' & ');
   return (
     <Text>
       {bowler} to {batsmen}
@@ -88,14 +88,14 @@ const Ball = ({ball}) => {
   if (typeLetter) ballText = ball.runs + ball.extras + '' + typeLetter;
 
   return (
-    <View
+    <ScrollView
       style={{
         ...BallLogStyles.ballContainer,
         width: 25,
         height: 25,
       }}>
       <Text style={{...BallLogStyles.ballText, fontSize: 10}}>{ballText}</Text>
-    </View>
+    </ScrollView>
   );
 };
 

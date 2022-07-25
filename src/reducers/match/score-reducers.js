@@ -121,7 +121,7 @@ function updateBall(state, originalRuns) {
     state.validBalls++;
   }
 
-  updateBattingTeam(battingTeam, runs, extras, extraType);
+  updateBattingTeam(battingTeam, runs, extras, extraType, ballCounted);
   battingTeam.runRate = getRunRate(
     battingTeam.runs,
     battingTeam.over.over,
@@ -179,9 +179,12 @@ function updateBall(state, originalRuns) {
   );
 }
 
-function updateBattingTeam(battingTeam, runs, extras, extrasType) {
+function updateBattingTeam(battingTeam, runs, extras, extrasType, ballCounted) {
   battingTeam.runs += runs + extras;
-  battingTeam.over = OverUtils.addBall(battingTeam.over);
+
+  if (ballCounted) {
+    battingTeam.over = OverUtils.addBall(battingTeam.over);
+  }
 
   if (extras) {
     battingTeam.extras[extrasType] += extras;
@@ -215,11 +218,7 @@ function updateBowler(bowling, runs, types, validBalls) {
 }
 
 function isBallCounted({wide, noBall}) {
-  if (wide || noBall) {
-    return false;
-  }
-
-  return true;
+  return !(wide || noBall);
 }
 
 function logState(state) {

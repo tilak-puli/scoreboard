@@ -21,6 +21,7 @@ const PreviousBalls = ({log = []}) => {
       last6BallDivs.push(<Text style={CommonStyles.line} />);
       currentOver = ball.over.over;
     }
+
     last6BallDivs.push(
       <Ball run={ball.runs + ball.extras} types={ball.types} key={i} />,
     );
@@ -46,7 +47,9 @@ const Ball = ({run, types = {}}) => {
   let ballText = run;
   if (typeLetter) {
     ballText = typeLetter;
-    if (run) ballText = '' + run + typeLetter;
+    if (run) {
+      ballText = '' + run + typeLetter;
+    }
   }
   return (
     <View style={BallLogStyles.ballContainer}>
@@ -56,7 +59,7 @@ const Ball = ({run, types = {}}) => {
 };
 
 export const getTypeLetter = (types = {}) => {
-  const selectedTypes = Object.keys(types).filter((key) => types[key]);
+  const selectedTypes = Object.keys(types).filter(key => types[key]);
   let typeLetter = '';
 
   const firstShortType = shortTypes[selectedTypes[0]];
