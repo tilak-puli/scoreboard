@@ -30,7 +30,14 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
 export function getBatsmanRow({name = '', batting}, star) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text style={TableStyles.nameItem}>{name + (star ? '*' : '')}</Text>
+      <Text
+        style={{
+          ...TableStyles.nameItem,
+          color: star ? '#D2386C' : 'black',
+          fontSize: 20,
+        }}>
+        {name + (star ? '*' : '')}
+      </Text>
       <Text style={TableStyles.rowItem}>{batting.runs}</Text>
       <Text style={TableStyles.rowItem}>{batting.balls}</Text>
       <Text style={TableStyles.rowItem}>{batting.fours}</Text>

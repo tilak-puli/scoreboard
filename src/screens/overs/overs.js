@@ -24,7 +24,9 @@ const Overs = ({match}) => {
     battingTeam = [bowlingTeam, (bowlingTeam = battingTeam)][0]; //swap;
   }
   return (
-    <SafeAreaView style={CommonStyles.basicPage}>{inningsDivs}</SafeAreaView>
+    <SafeAreaView style={CommonStyles.basicPage}>
+      <ScrollView>{inningsDivs}</ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -64,7 +66,11 @@ const OverHeading = ({over, balls}) => (
 const Balls = ({balls}) => (
   <View style={styles.ballsContainer}>
     <BallsTitle balls={balls} />
-    <View style={styles.balls}>
+    <View
+      style={StyleSheet.flatten([
+        styles.balls,
+        {marginRight: 50, flexWrap: 'wrap'},
+      ])}>
       {balls.map(ball => (
         <Ball ball={ball} />
       ))}
@@ -88,14 +94,15 @@ const Ball = ({ball}) => {
   if (typeLetter) ballText = ball.runs + ball.extras + '' + typeLetter;
 
   return (
-    <ScrollView
+    <View
       style={{
         ...BallLogStyles.ballContainer,
         width: 25,
         height: 25,
+        marginTop: 10,
       }}>
       <Text style={{...BallLogStyles.ballText, fontSize: 10}}>{ballText}</Text>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -115,7 +122,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  ballsContainer: {minHeight: 55, justifyContent: 'space-between'},
+  ballsContainer: {
+    minHeight: 55,
+    justifyContent: 'space-between',
+  },
 
   runs: {paddingRight: 15},
 

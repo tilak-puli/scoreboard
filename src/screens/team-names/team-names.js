@@ -81,12 +81,25 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
           onChangeText={o => updateTotalOvers(+o)}
           placeholder="Overs"
         />
-        <View style={{...CommonStyles.horizontal, marginBottom: 5}}>
-          <Text style={CommonStyles.horizontalLabel}>Toss won by:</Text>
+        <View
+          style={{
+            ...CommonStyles.horizontal,
+            marginBottom: 20,
+            paddingLeft: 10,
+          }}>
+          <Text
+            style={{
+              ...CommonStyles.horizontalLabel,
+              color: '#86939e',
+              fontWeight: 'bold',
+            }}>
+            Toss won by:
+          </Text>
           <Button
             type={winTossTeam === 1 ? 'solid' : 'clear'}
             buttonStyle={{
               backgroundColor: winTossTeam === 1 ? '#2a69ac' : 'transparent',
+              width: 80,
             }}
             onPress={() => updateWinTossTeam(1)}
             title="Team 1"
@@ -96,17 +109,31 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
             onPress={() => updateWinTossTeam(2)}
             buttonStyle={{
               backgroundColor: winTossTeam === 2 ? '#2a69ac' : 'transparent',
+              width: 80,
             }}
             title="Team 2"
           />
         </View>
-        <View style={{...CommonStyles.horizontal, marginBottom: 5}}>
-          <Text style={CommonStyles.horizontalLabel}>Selected:</Text>
+        <View
+          style={{
+            ...CommonStyles.horizontal,
+            marginBottom: 20,
+            paddingLeft: 10,
+          }}>
+          <Text
+            style={{
+              ...CommonStyles.horizontalLabel,
+              color: '#86939e',
+              fontWeight: 'bold',
+            }}>
+            Selected:
+          </Text>
           <Button
             type={selected === 'batting' ? 'solid' : 'clear'}
             buttonStyle={{
               backgroundColor:
                 selected === 'batting' ? '#2a69ac' : 'transparent',
+              width: 80,
             }}
             onPress={() => updatedSelected('batting')}
             title="Batting"
@@ -116,6 +143,7 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
             buttonStyle={{
               backgroundColor:
                 selected === 'bowling' ? '#2a69ac' : 'transparent',
+              width: 80,
             }}
             onPress={() => updatedSelected('bowling')}
             title="Bowling"
