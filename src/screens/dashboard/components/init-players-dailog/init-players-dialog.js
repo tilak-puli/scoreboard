@@ -7,10 +7,10 @@ import {
   SlideAnimation,
   ModalTitle,
 } from 'react-native-modals';
-import {Input} from 'react-native-elements';
 import {Dimensions} from 'react-native';
+import AutoSuggest from '../../../../components/auto-suggest/auto-suggest';
 
-const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
+const InitPlayersDialog = ({isVisible, updateInitPlayers, globalPlayers}) => {
   const [striker, updateStriker] = useState('');
   const [nonStriker, updateNonStriker] = useState('');
   const [bowler, updateBowler] = useState('');
@@ -60,26 +60,26 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
         })
       }>
       <ModalContent>
-        <Input
-          onChangeText={updateStriker}
-          label={'Striker Name'}
-          value={striker}
-          placeholder="Enter Striker Name"
+        <AutoSuggest
+          onChange={updateStriker}
           errorMessage={SER}
+          label={'Striker Name'}
+          data={globalPlayers}
+          value={striker}
         />
-        <Input
-          onChangeText={updateNonStriker}
-          label={'Non Striker Name'}
-          value={nonStriker}
+        <AutoSuggest
+          onChange={updateNonStriker}
           errorMessage={NSER}
-          placeholder="Enter Non Striker Name"
+          label={'Non Striker Name'}
+          data={globalPlayers}
+          value={nonStriker}
         />
-        <Input
-          onChangeText={updateBowler}
-          label={'Bowler Name'}
-          value={bowler}
+        <AutoSuggest
+          onChange={updateBowler}
           errorMessage={BER}
-          placeholder="Enter Bowler Name"
+          label={'Bowler Name'}
+          data={globalPlayers}
+          value={bowler}
         />
       </ModalContent>
       <ModalFooter>

@@ -65,7 +65,7 @@ const Ball = ({run, types = {}}) => {
         style={{
           ...BallLogStyles.ballText,
           fontSize,
-          color: backgroundColor === 'inherit' ? 'black' : 'white',
+          color: backgroundColor === 'white' ? 'black' : 'white',
         }}>
         {ballText}
       </Text>

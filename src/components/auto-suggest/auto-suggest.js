@@ -51,7 +51,7 @@ const AutoSuggest = ({
           style={{
             backgroundColor: 'white',
             borderWidth: 1,
-            zIndex: 10,
+            zIndex: 100,
             borderColor: 'grey',
             borderRadius: 3,
             position: 'absolute',

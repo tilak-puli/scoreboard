@@ -101,7 +101,7 @@ export const getBallColor = (runs, isWicket) => {
     return 'rgb(222,138,13)';
   }
 
-  return 'inherit';
+  return 'white';
 };
 
 const Ball = ({ball}) => {

@@ -7,14 +7,15 @@ import {
   SlideAnimation,
   ModalTitle,
 } from 'react-native-modals';
-import {Input} from 'react-native-elements';
-import {Dimensions, Keyboard} from 'react-native';
+import {Dimensions, Keyboard, ScrollView} from 'react-native';
+import AutoSuggest from '../../../../components/auto-suggest/auto-suggest';
 
 const NextPlayerDialog = ({
   playerType = 'player',
   isVisible,
   hide,
   onContinue,
+  globalPlayers,
 }) => {
   const [playerName, updatePlayerName] = useState('');
   const [errorMessage, updateErrorMessage] = useState('');
@@ -43,17 +44,19 @@ const NextPlayerDialog = ({
       }}
       modalTitle={<ModalTitle title="Next Player" />}
       visible={isVisible}
+      modalStyle={{overflow: 'visible'}}
       dialogAnimation={
         new SlideAnimation({
           slideFrom: 'bottom',
         })
       }>
       <ModalContent>
-        <Input
-          onChangeText={updatePlayerName}
-          label={'Enter next ' + playerType}
-          value={playerName}
+        <AutoSuggest
+          onChange={updatePlayerName}
           errorMessage={errorMessage}
+          label={'Enter next ' + playerType}
+          data={globalPlayers}
+          value={playerName}
         />
       </ModalContent>
       <ModalFooter>
