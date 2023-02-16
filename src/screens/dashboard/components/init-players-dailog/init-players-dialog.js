@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-
 import {
-  Dialog,
-  DialogButton,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
+  Modal,
+  ModalFooter,
+  ModalButton,
+  ModalContent,
   SlideAnimation,
-} from 'react-native-popup-dialog';
+  ModalTitle,
+} from 'react-native-modals';
 import {Input} from 'react-native-elements';
 import {Dimensions} from 'react-native';
 
@@ -51,8 +50,8 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
   };
 
   return (
-    <Dialog
-      dialogTitle={<DialogTitle title="Let's start" />}
+    <Modal
+      modalTitle={<ModalTitle title="Let's start" />}
       width={Dimensions.get('window').width * 0.9}
       visible={isVisible}
       dialogAnimation={
@@ -60,7 +59,7 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
           slideFrom: 'bottom',
         })
       }>
-      <DialogContent>
+      <ModalContent>
         <Input
           onChangeText={updateStriker}
           label={'Striker Name'}
@@ -82,11 +81,11 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers}) => {
           errorMessage={BER}
           placeholder="Enter Bowler Name"
         />
-      </DialogContent>
-      <DialogFooter>
-        <DialogButton onPress={clearAndUpdate} text="Start Match" />
-      </DialogFooter>
-    </Dialog>
+      </ModalContent>
+      <ModalFooter>
+        <ModalButton onPress={clearAndUpdate} text="Start Match" />
+      </ModalFooter>
+    </Modal>
   );
 };
 

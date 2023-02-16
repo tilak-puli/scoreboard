@@ -12,6 +12,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import RootNavigator from './src/navigator';
 import store from './src/store';
 import {Root} from 'native-base';
+import {ModalPortal} from 'react-native-modals';
 
 const App: () => React$Node = () => {
   return (
@@ -19,6 +20,7 @@ const App: () => React$Node = () => {
       <NavigationContainer>
         <Root>
           <RootNavigator />
+          <ModalPortal />
         </Root>
       </NavigationContainer>
     </Provider>

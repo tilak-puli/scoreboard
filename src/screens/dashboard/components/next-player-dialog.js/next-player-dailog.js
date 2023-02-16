@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-
 import {
-  Dialog,
-  DialogButton,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
+  Modal,
+  ModalFooter,
+  ModalButton,
+  ModalContent,
   SlideAnimation,
-} from 'react-native-popup-dialog';
+  ModalTitle,
+} from 'react-native-modals';
 import {Input} from 'react-native-elements';
-import {Dimensions} from 'react-native';
+import {Dimensions, Keyboard} from 'react-native';
 
 const NextPlayerDialog = ({
   playerType = 'player',
@@ -36,29 +35,32 @@ const NextPlayerDialog = ({
   };
 
   return (
-    <Dialog
+    <Modal
       width={Dimensions.get('window').width * 0.9}
-      onTouchOutside={hide}
-      dialogTitle={<DialogTitle title="Next Player" />}
+      onTouchOutside={() => {
+        hide();
+        Keyboard.dismiss();
+      }}
+      modalTitle={<ModalTitle title="Next Player" />}
       visible={isVisible}
       dialogAnimation={
         new SlideAnimation({
           slideFrom: 'bottom',
         })
       }>
-      <DialogContent>
+      <ModalContent>
         <Input
           onChangeText={updatePlayerName}
           label={'Enter next ' + playerType}
           value={playerName}
           errorMessage={errorMessage}
         />
-      </DialogContent>
-      <DialogFooter>
-        <DialogButton onPress={clearAndHide} text="Cancel" />
-        <DialogButton onPress={submit} text="Continue" />
-      </DialogFooter>
-    </Dialog>
+      </ModalContent>
+      <ModalFooter>
+        <ModalButton onPress={clearAndHide} text="Cancel" />
+        <ModalButton onPress={submit} text="Continue" />
+      </ModalFooter>
+    </Modal>
   );
 };
 

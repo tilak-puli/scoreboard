@@ -1,26 +1,27 @@
 import React, {useState} from 'react';
 
 import {
-  Dialog,
-  DialogButton,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
+  Modal,
+  ModalFooter,
+  ModalButton,
+  ModalContent,
   SlideAnimation,
-} from 'react-native-popup-dialog';
+  ModalTitle,
+} from 'react-native-modals';
 import {Input} from 'react-native-elements';
-import {Dimensions} from 'react-native';
+import {Dimensions, Keyboard, ScrollView} from 'react-native';
 
 const RunsInputDialog = ({isVisible, hide, addRuns}) => {
   const [runs, updateRuns] = useState(0);
   const clearAndHide = () => {
     updateRuns();
     hide();
+    Keyboard.dismiss();
   };
   return (
-    <Dialog
+    <Modal
       onTouchOutside={hide}
-      dialogTitle={<DialogTitle title="Woah!! more tha 6" />}
+      modalTitle={<ModalTitle title="Woah!! more tha 6" />}
       width={Dimensions.get('window').width * 0.9}
       visible={isVisible}
       dialogAnimation={
@@ -28,24 +29,26 @@ const RunsInputDialog = ({isVisible, hide, addRuns}) => {
           slideFrom: 'bottom',
         })
       }>
-      <DialogContent>
-        <Input
-          onChangeText={updateRuns}
-          keyboardType={'numeric'}
-          label={'Enter runs'}
-        />
-      </DialogContent>
-      <DialogFooter>
-        <DialogButton onPress={clearAndHide} text="Cancel" />
-        <DialogButton
+      <ModalContent>
+        <ScrollView>
+          <Input
+            onChangeText={updateRuns}
+            keyboardType={'numeric'}
+            label={'Enter runs'}
+          />
+        </ScrollView>
+      </ModalContent>
+      <ModalFooter>
+        <ModalButton onPress={clearAndHide} text="Cancel" />
+        <ModalButton
           onPress={() => {
             addRuns(+runs);
             clearAndHide();
           }}
           text="Add runs"
         />
-      </DialogFooter>
-    </Dialog>
+      </ModalFooter>
+    </Modal>
   );
 };
 

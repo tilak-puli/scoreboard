@@ -52,7 +52,6 @@ const AutoSuggest = ({
             backgroundColor: 'white',
             borderWidth: 1,
             zIndex: 10,
-            flexDirection: 'column',
             borderColor: 'grey',
             borderRadius: 3,
             position: 'absolute',
