@@ -8,21 +8,21 @@ const MatchActions = ({navigation, endInnings}) => (
       title={'End Innings'}
       onPress={endInnings}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
     <Button
       title={'Overs'}
       onPress={() => navigation.navigate('Overs')}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
     <Button
       title={'Score Board'}
       onPress={() => navigation.navigate('Scoreboard')}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
   </Card>

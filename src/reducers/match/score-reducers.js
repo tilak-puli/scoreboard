@@ -128,7 +128,7 @@ function updateBall(state, originalRuns) {
     state.validBalls,
   );
 
-  updateStriker(batting, runs, types);
+  updateStriker(batting, runs, types, ballCounted);
   updateBowler(bowling, runs, types, state.validBalls);
 
   if (state.selectedTypes.wicket) {
@@ -191,7 +191,7 @@ function updateBattingTeam(battingTeam, runs, extras, extrasType, ballCounted) {
   }
 }
 
-function updateStriker(batting, runs) {
+function updateStriker(batting, runs, types, ballCounted) {
   if (runs === 4) {
     batting.fours++;
   }
@@ -199,8 +199,14 @@ function updateStriker(batting, runs) {
     batting.sixers++;
   }
 
-  batting.runs += runs;
-  batting.balls += 1;
+  if (!types.wide) {
+    batting.runs += runs;
+  }
+
+  if (ballCounted) {
+    batting.balls += 1;
+  }
+
   batting.strikeRate = parseInt((batting.runs / batting.balls) * 100);
 }
 

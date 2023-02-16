@@ -1,8 +1,9 @@
 import {Card, Text} from 'react-native-elements';
 import React from 'react';
 import CommonStyles, {BallLogStyles} from '../../../../stylesheet';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import _ from 'lodash';
+import {getBallColor} from '../../../overs/overs';
 
 const shortTypes = {
   noBall: 'nb',
@@ -51,9 +52,23 @@ const Ball = ({run, types = {}}) => {
       ballText = '' + run + typeLetter;
     }
   }
+
+  const backgroundColor = getBallColor(run, types?.wicket);
+
   return (
-    <View style={BallLogStyles.ballContainer}>
-      <Text style={{...BallLogStyles.ballText, fontSize}}>{ballText}</Text>
+    <View
+      style={StyleSheet.flatten([
+        BallLogStyles.ballContainer,
+        {backgroundColor},
+      ])}>
+      <Text
+        style={{
+          ...BallLogStyles.ballText,
+          fontSize,
+          color: backgroundColor === 'inherit' ? 'black' : 'white',
+        }}>
+        {ballText}
+      </Text>
     </View>
   );
 };

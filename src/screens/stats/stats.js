@@ -54,7 +54,7 @@ const Stats = ({
       />
       <Text
         style={{
-          fontSize: 20,
+          fontSize: 20, 
           padding: 10,
           backgroundColor: 'rgba(222,220,220,0.71)',
         }}>

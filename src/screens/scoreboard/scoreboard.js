@@ -69,8 +69,7 @@ const Innings = ({battingTeam, bowlingTeam, innings}) => {
     const isOut = b.batting.isOut || b.batting.isRetired;
     batsmenRows.push(
       <View style={{borderBottomWidth: 1, borderBottomColor: '#DDD'}}>
-        {getBatsmanRow(b, !isOut)}
-        <OutMessage batsman={b} />
+        {getBatsmanRow(b, !isOut, true)}
       </View>,
     );
   });
@@ -141,11 +140,11 @@ export function getOutMessage(wicketCause, wicketHelper, wicketBowler) {
   } else if (wicketCause === WICKET_TYPES.STUMP_OUT) {
     return 'st ' + wicketHelper + ' b ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.RUN_OUT) {
-    return 'runout (' + wicketHelper + ' / ' + wicketBowler + ')';
+    return 'Run Out (' + wicketHelper + ' / ' + wicketBowler + ')';
   } else if (wicketCause === WICKET_TYPES.HIT_WICKET) {
-    return 'hit wicket ' + wicketBowler;
+    return 'Hit wicket ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.HIT_SIX) {
-    return 'hit six ' + wicketBowler;
+    return 'Hit six ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.LBW) {
     return 'lbw ' + wicketBowler;
   } else if (wicketCause === WICKET_TYPES.OTHER) {
@@ -157,9 +156,7 @@ export function getOutMessage(wicketCause, wicketHelper, wicketBowler) {
   }
 }
 
-const OutMessage = ({batsman}) => {
-  const {wicketMessage} = batsman.batting;
-
+export const OutMessage = ({wicketMessage}) => {
   return (
     <View>
       <Text
@@ -168,7 +165,7 @@ const OutMessage = ({batsman}) => {
           paddingLeft: 5,
           paddingBottom: 2,
         }}>
-        {wicketMessage}
+        {wicketMessage || 'not out'}
       </Text>
     </View>
   );

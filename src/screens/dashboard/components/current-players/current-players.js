@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TableStyles} from '../../../../stylesheet';
 import {OverUtils} from '../../../../models/OverUtils';
+import {OutMessage} from '../../../scoreboard/scoreboard';
 
 const CurrentPlayers = ({striker, nonStriker, bowler}) => {
   if (!striker || !nonStriker || !bowler) {
@@ -27,17 +28,20 @@ const CurrentPlayers = ({striker, nonStriker, bowler}) => {
   );
 };
 
-export function getBatsmanRow({name = '', batting}, star) {
+export function getBatsmanRow({name = '', batting}, star, showOutReason) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text
-        style={{
-          ...TableStyles.nameItem,
-          color: star ? '#D2386C' : 'black',
-          fontSize: 20,
-        }}>
-        {name + (star ? '*' : '')}
-      </Text>
+      <View width={150}>
+        <Text
+          style={{
+            ...TableStyles.nameItem,
+            color: star ? '#D2386C' : 'black',
+            fontSize: star ? 18 : 14,
+          }}>
+          {name + (star ? '*' : '')}
+        </Text>
+        {showOutReason && <OutMessage wicketMessage={batting.wicketMessage} />}
+      </View>
       <Text style={TableStyles.rowItem}>{batting.runs}</Text>
       <Text style={TableStyles.rowItem}>{batting.balls}</Text>
       <Text style={TableStyles.rowItem}>{batting.fours}</Text>
@@ -49,7 +53,7 @@ export function getBatsmanRow({name = '', batting}, star) {
 export function getBowlerRow({name, bowling}) {
   return (
     <View style={TableStyles.tableRow}>
-      <Text style={TableStyles.nameItem}>{name}</Text>
+      <Text style={{...TableStyles.nameItem, width: 150}}>{name}</Text>
       <Text style={TableStyles.rowItem}>
         {OverUtils.toString(bowling.over)}
       </Text>
@@ -70,6 +74,7 @@ export const getBatsmanHeader = () => (
       style={StyleSheet.flatten([
         TableStyles.rowItemFade,
         TableStyles.nameItem,
+        {width: 150},
       ])}>
       Batsperson
     </Text>
@@ -88,6 +93,7 @@ export const getBowlerHeader = () => (
       style={StyleSheet.flatten([
         TableStyles.rowItemFade,
         TableStyles.nameItem,
+        {width: 150},
       ])}>
       Bowler
     </Text>

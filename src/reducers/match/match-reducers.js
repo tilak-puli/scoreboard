@@ -4,8 +4,8 @@ import {
   getTeams,
 } from './init-reducers';
 import {handleInningsChange, handleMatchOver} from './score-reducers';
-import {getInitialState} from './reducer';
 import {st_mergeMatch} from './storage-reducers';
+import {getInitialState} from './initialState';
 
 export const createNewMatch = state => {
   if (state.overs > 0) {

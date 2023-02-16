@@ -78,7 +78,11 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
           label={'Overs'}
           errorMessage={oversER}
           keyboardType={'numeric'}
-          onChangeText={o => updateTotalOvers(+o)}
+          onChangeText={o => {
+            if (o > 0) {
+              updateTotalOvers(+o);
+            }
+          }}
           placeholder="Overs"
         />
         <View

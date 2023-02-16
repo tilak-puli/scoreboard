@@ -6,12 +6,7 @@ import {
   nextBowler,
   setMatch,
 } from './match-reducers';
-import {
-  getInitialTypes,
-  teamInitialState,
-  updateInitPlayers,
-  updateMatchBasicDetails,
-} from './init-reducers';
+import {updateInitPlayers, updateMatchBasicDetails} from './init-reducers';
 import {addBall, updateSelectedType} from './score-reducers';
 import {retire, swap, undo} from './actions-reducers';
 import {
@@ -23,36 +18,7 @@ import {
   updateRunsInputDialogVisible,
   updateWicketDialogVisible,
 } from './dialog-reducers';
-
-export const getInitialState = () => ({
-  team1: teamInitialState('team1'),
-  team2: teamInitialState('team2'),
-  battingTeam: 'team1',
-  bowlingTeam: 'team2',
-
-  overs: 0,
-  innings: 1,
-
-  validBalls: 0,
-
-  selectedTypes: getInitialTypes(),
-  selectedRuns: null,
-
-  matchOver: false,
-  matchOverMessage: '',
-  matchWonBy: '',
-
-  prevStates: [],
-
-  matchOverDialogVisible: false,
-  wicketDialogVisible: false,
-  runsInputDialogVisible: false,
-  NextPlayerDialogVisible: false,
-  inningsOverDialogVisible: false,
-  initPlayersDialogVisible: false,
-
-  needBowlerChange: false,
-});
+import {getInitialState} from './initialState';
 
 export const matchSlice = createSlice({
   name: 'match',

@@ -120,7 +120,7 @@ export const BallLogStyles = StyleSheet.create({
     borderColor: 'gray',
     borderStyle: 'solid',
     borderRadius: 20,
-    borderWidth: 1,
+    borderWidth: 0.5,
     marginLeft: 5,
     marginRight: 5,
 
@@ -137,8 +137,8 @@ export const TableStyles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 3,
-    paddingBottom: 3,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
   headerRow: {
     borderBottomWidth: 1,

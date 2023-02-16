@@ -10,21 +10,21 @@ const Actions = ({undo, swap, retire}) => (
       title={'Undo'}
       onPress={undo}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
     <Button
       title={'Swap'}
       onPress={swap}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
     <Button
       title={'Retire'}
       onPress={retire}
       buttonStyle={{
-        backgroundColor: '#2a69ac',
+        backgroundColor: '#153e75',
       }}
     />
   </Card>

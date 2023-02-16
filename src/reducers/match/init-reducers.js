@@ -1,4 +1,4 @@
-import Over from '../../models/OverUtils';
+import {addGlobalPlayer} from '../matches/reducer';
 
 const newPlayer = name => ({
   name,

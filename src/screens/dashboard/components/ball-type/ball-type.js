@@ -19,36 +19,45 @@ const BallType = ({selectedTypes, updateSelectedType}) => {
 
   const toggleWicket = () => updateSelectedType('wicket', !wicket);
 
+  const normalStyles = {color: '#153e75'};
+  const selectedStyles = {color: 'white', backgroundColor: '#153e75'};
+  const selectedTitleStyles = {color: 'white', backgroundColor: '#153e75'};
+
   return (
     <Card wrapperStyle={CommonStyles.horizontalWithSpace}>
       <Button
         type={wide ? 'solid' : 'outline'}
         onPress={toggleWide}
-        titleStyle={{color: '#153e75'}}
+        titleStyle={wide ? selectedTitleStyles : normalStyles}
+        buttonStyle={wide ? selectedStyles : normalStyles}
         title="Wide"
       />
       <Button
         type={noBall ? 'solid' : 'outline'}
         onPress={toggleNoBall}
         title="No Ball"
-        titleStyle={{color: '#153e75'}}
+        titleStyle={noBall ? selectedTitleStyles : normalStyles}
+        buttonStyle={noBall ? selectedStyles : normalStyles}
       />
       <Button
         type={byes ? 'solid' : 'outline'}
         onPress={toggleByes}
-        titleStyle={{color: '#153e75'}}
+        titleStyle={byes ? selectedTitleStyles : normalStyles}
+        buttonStyle={byes ? selectedStyles : normalStyles}
         title="Byes"
       />
       <Button
         type={legByes ? 'solid' : 'outline'}
         onPress={toggleLegByes}
-        titleStyle={{color: '#153e75'}}
+        titleStyle={legByes ? selectedTitleStyles : normalStyles}
+        buttonStyle={legByes ? selectedStyles : normalStyles}
         title="Leg Byes"
       />
       <Button
         type={wicket ? 'solid' : 'outline'}
         onPress={toggleWicket}
-        titleStyle={{color: '#153e75'}}
+        titleStyle={wicket ? selectedTitleStyles : normalStyles}
+        buttonStyle={wicket ? selectedStyles : normalStyles}
         title="Wicket"
       />
     </Card>

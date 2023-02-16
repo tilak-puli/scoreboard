@@ -88,10 +88,30 @@ const BallsTitle = ({balls}) => {
   );
 };
 
+export const getBallColor = (runs, isWicket) => {
+  if (isWicket) {
+    return 'rgb(180,3,3)';
+  }
+
+  if (runs >= 6) {
+    return 'rgb(69,134,7)';
+  }
+
+  if (runs >= 4) {
+    return 'rgb(222,138,13)';
+  }
+
+  return 'inherit';
+};
+
 const Ball = ({ball}) => {
   const typeLetter = getTypeLetter(ball.types);
   let ballText = ball.runs + ball.extras;
-  if (typeLetter) ballText = ball.runs + ball.extras + '' + typeLetter;
+  if (typeLetter && ball.runs + ball.extras > 1) {
+    ballText = ball.runs + ball.extras + '' + typeLetter;
+  }
+
+  const backgroundColor = getBallColor(ball.runs, ball?.types?.wicket);
 
   return (
     <View
@@ -100,8 +120,16 @@ const Ball = ({ball}) => {
         width: 25,
         height: 25,
         marginTop: 10,
+        backgroundColor,
       }}>
-      <Text style={{...BallLogStyles.ballText, fontSize: 10}}>{ballText}</Text>
+      <Text
+        style={{
+          ...BallLogStyles.ballText,
+          fontSize: 10,
+          color: backgroundColor === 'inherit' ? 'black' : 'white',
+        }}>
+        {ballText}
+      </Text>
     </View>
   );
 };
