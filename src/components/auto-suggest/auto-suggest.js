@@ -23,7 +23,7 @@ const AutoSuggest = ({
       .slice(0, 5);
   };
   return (
-    <View style={[containerStyle]}>
+    <View style={[containerStyle, {margin: 5}]}>
       <TextInput
         onFocus={() => {
           if (value.length === 0) {

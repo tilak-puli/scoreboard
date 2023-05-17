@@ -12,6 +12,8 @@ import {Dimensions, Keyboard} from 'react-native';
 import CommonStyles from '../../../../stylesheet';
 
 const MatchOverDialog = ({name, message, visible, hide}) => {
+  const isDraw = name === null;
+
   return (
     <Modal
       width={Dimensions.get('window').width * 0.9}
@@ -27,8 +29,8 @@ const MatchOverDialog = ({name, message, visible, hide}) => {
         })
       }>
       <ModalContent>
-        <Text style={CommonStyles.bigTextGreen}>{name}</Text>
-        <Text style={CommonStyles.centerText}>won the match</Text>
+        <Text style={CommonStyles.bigTextGreen}>{isDraw ? 'DRAW' : name}</Text>
+        {!isDraw && <Text style={CommonStyles.centerText}>won the match</Text>}
         <Text />
         <Text style={[CommonStyles.centerText, CommonStyles.serif]}>
           {message}

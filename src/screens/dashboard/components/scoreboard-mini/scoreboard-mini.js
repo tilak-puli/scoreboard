@@ -84,7 +84,7 @@ const ScoreboardMini = ({
           )}
         </View>
       </View>
-      {innings === 2 && bowlingTeamData.runs - battingTeamData.runs > 0 && (
+      {innings === 2 && bowlingTeamData.runs >= battingTeamData.runs && (
         <View>
           <Text>
             {battingTeamData.name} needs{' '}

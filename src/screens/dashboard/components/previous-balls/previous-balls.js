@@ -19,7 +19,9 @@ const PreviousBalls = ({log = []}) => {
 
   last6Balls.forEach((ball, i) => {
     if (currentOver !== ball.over.over) {
-      last6BallDivs.push(<Text style={CommonStyles.line} />);
+      last6BallDivs.push(
+        <Text key={ball.over.over + '' + i} style={CommonStyles.line} />,
+      );
       currentOver = ball.over.over;
     }
 

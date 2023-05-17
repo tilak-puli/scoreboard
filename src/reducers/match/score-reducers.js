@@ -267,7 +267,7 @@ export function handleMatchOver(state) {
       bowlingTeam.runs - battingTeam.runs,
     );
   } else {
-    state.matchWonBy = 'DRAW';
+    state.matchWonBy = null;
     state.matchOverMessage = drawMessage();
   }
 

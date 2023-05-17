@@ -59,7 +59,7 @@ const InitPlayersDialog = ({isVisible, updateInitPlayers, globalPlayers}) => {
           slideFrom: 'bottom',
         })
       }>
-      <ModalContent>
+      <ModalContent style={{padding: 5}}>
         <AutoSuggest
           onChange={updateStriker}
           errorMessage={SER}

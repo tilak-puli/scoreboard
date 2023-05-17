@@ -30,7 +30,7 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
       updateT2NameER('');
     }
     if (overs < 1) {
-      updateOversER('Please enter over more than 1');
+      updateOversER('Please enter minimum 1');
       error = true;
     } else {
       updateOversER('');
@@ -79,9 +79,7 @@ const TeamNames = ({updateMatchBasicDetails, createNewMatch, navigation}) => {
           errorMessage={oversER}
           keyboardType={'numeric'}
           onChangeText={o => {
-            if (o > 0) {
-              updateTotalOvers(+o);
-            }
+            updateTotalOvers(+o || '');
           }}
           placeholder="Overs"
         />
