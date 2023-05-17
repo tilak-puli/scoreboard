@@ -52,17 +52,16 @@ const RootNavigator = () => {
 
 const BottomNavigator = () => (
   <Tab.Navigator
-    activeColor="#153e75"
-    shifting={true}
+    shifting={false}
     labelStyle={{fontSize: 12}}
-    tabBarColor={'red'}
-    barStyle={{backgroundColor: 'white'}}>
+    barStyle={{backgroundColor: 'white'}}
+    activeColor={'rgba(21,62,117,0.84)'}>
     <Tab.Screen
-      name={'New'}
+      name={'New Match'}
       component={TeamNames}
       options={{
         tabBarIcon: ({color}) => (
-          <Icon name="add" type="material" color={color} size={26} />
+          <Icon name="sports-cricket" type={'material'} color={color} />
         ),
       }}
     />
@@ -71,7 +70,7 @@ const BottomNavigator = () => (
       component={Matches}
       options={{
         tabBarIcon: ({color}) => (
-          <Icon name="assignment" type="material" color={color} size={26} />
+          <Icon name="history" color={color} size={26} />
         ),
       }}
     />

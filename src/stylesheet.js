@@ -86,6 +86,10 @@ const CommonStyles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: 5,
   },
+  labelTitle: {
+    color: 'rgba(21,62,117,0.84)',
+  },
+  cardStyle: {borderRadius: 10},
 });
 
 export const RunsInputStyles = StyleSheet.create({
