@@ -8,6 +8,7 @@ import {allMatches} from '../../storage/store';
 import {Button, Card, Icon} from 'react-native-elements';
 import ScoreboardMiniRow from '../dashboard/components/scoreboard-mini/scoreboard-mini-row';
 import {downloadJson} from '../../utils';
+import moment from 'moment';
 
 const Matches = ({
   matches = [],
@@ -64,7 +65,7 @@ const Matches = ({
 
 const Match = ({match, deleteMatch, setMatch, navigation}) => {
   return (
-    <Card>
+    <Card containerStyle={CommonStyles.cardStyle}>
       <ShortTime time={match.createdTime} />
       <Status match={match} />
       <Actions
@@ -77,22 +78,20 @@ const Match = ({match, deleteMatch, setMatch, navigation}) => {
   );
 };
 
-const ShortTime = ({time}) => (
-  <Text style={{fontSize: 12}}>
-    {new Date(time).toLocaleString([], {
-      timeStyle: 'short',
-      dateStyle: 'short',
-      hour12: true,
-    })}
-  </Text>
-);
+const ShortTime = ({time}) => {
+  const date = new Date(time);
+  return (
+    <Text style={{fontSize: 12}}>
+      {moment(date).format('ddd, Do MMM, h:mm a')}
+    </Text>
+  );
+};
+
 const Status = ({match}) => (
   <View
     style={{
-      borderBottomWidth: 1,
       paddingTop: 10,
       paddingBottom: 5,
-      borderBottomColor: '#AAA',
     }}>
     <View style={{paddingBottom: 10}}>
       <ScoreboardMiniRow
@@ -116,7 +115,7 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       title={'Resume'}
       type={'clear'}
       buttonStyle={{backgroundColor: 'transparent'}}
-      titleStyle={{color: 'rgba(0,0,0,0.61)'}}
+      titleStyle={{color: 'rgba(0,0,0,0.67)'}}
       onPress={() => {
         setMatch(match);
         navigation.navigate('Dashboard');
@@ -126,7 +125,7 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       style={CommonStyles.flex1}
       title={'Score Board'}
       buttonStyle={{backgroundColor: 'transparent'}}
-      titleStyle={{color: 'rgba(0,0,0,0.61)'}}
+      titleStyle={{color: 'rgba(0,0,0,0.67)'}}
       onPress={() => {
         setMatch(match);
         navigation.navigate('Scoreboard');
@@ -136,8 +135,8 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       name="share"
       type="material"
       style={{width: 130}}
-      color={'rgba(0,0,0,0.61)'}
-      size={26}
+      color={'rgba(0,0,0,0.67)'}
+      size={22}
       onPress={() =>
         downloadJson(
           match,
@@ -149,8 +148,8 @@ const Actions = ({match, setMatch, deleteMatch, navigation}) => (
       name="delete"
       type="material"
       style={{width: 130}}
-      color={'rgba(0,0,0,0.61)'}
-      size={26}
+      color={'rgba(0,0,0,0.67)'}
+      size={22}
       onPress={deleteMatch.bind(null, match.createdTime)}
     />
   </View>

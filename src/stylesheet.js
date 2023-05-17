@@ -42,7 +42,7 @@ const CommonStyles = StyleSheet.create({
     width: 100,
   },
   selectedRowText: {
-    fontSize: 20,
+    fontSize: 16,
   },
   actionsContainer: {
     width: '30%',
@@ -71,7 +71,7 @@ const CommonStyles = StyleSheet.create({
     borderRightWidth: 1.5,
   },
   greySmallText: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#666',
   },
   bigText: {
